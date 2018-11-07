@@ -7,10 +7,10 @@ import TimerButton from './components/TimerButton';
 
 class App extends Component {
   state = {
-    pomoDuration: moment.duration(5, 'minutes'),
-    shortBreakDuration: moment.duration(2, 'minutes'),
-    longBreakDuration: moment.duration(10, 'minutes'),
-    timerDisplay: moment.duration(5, 'minutes'),
+    pomoDuration: moment.duration(6, 'seconds'),
+    shortBreakDuration: moment.duration(3, 'seconds'),
+    longBreakDuration: moment.duration(10, 'seconds'),
+    timerDisplay: moment.duration(6, 'seconds'),
     timerStatus: STATUSES.NOT_SET,
     countdown: null,
     pomoCounter: 0
@@ -81,13 +81,11 @@ class App extends Component {
       longBreakDuration
     } = this.state;
 
-    // IF BREAK RUNNING, want to set POMO
     if (pomoCounter % 2 === 0) {
       this.setState({
         timerDisplay: pomoDuration
       });
     } else {
-      //IF POMO RUNNING, want to set BREAK
       pomoCounter < 7
         ? this.setState({
             timerDisplay: shortBreakDuration
@@ -105,14 +103,11 @@ class App extends Component {
       timerDisplay: pomoDuration,
       pomoCounter: 0
     });
-    alert('full pomo finished! 🍅');
-    // handle the pomo complete somehow.. function?
-    // (render conditional screen with ability to restart)
     return;
   };
 
   render() {
-    const { timerDisplay, timerStatus } = this.state;
+    const { timerDisplay, timerStatus, pomoCounter } = this.state;
     return (
       <div className="App">
         <p>
@@ -122,7 +117,11 @@ class App extends Component {
           </span>
           PomoCounter: {this.state.pomoCounter}
         </p>
-        <Timer timerDisplay={timerDisplay} timerStatus={timerStatus} />
+        <Timer
+          timerDisplay={timerDisplay}
+          timerStatus={timerStatus}
+          pomoCounter={pomoCounter}
+        />
         <TimerButton
           toggleTimer={this.toggleTimer}
           resetTimer={this.resetTimer}
