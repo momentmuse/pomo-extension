@@ -4,9 +4,7 @@ const TimerButton = props => {
   const { toggleTimer, timerStatus } = props;
   return (
     <button onClick={toggleTimer}>
-      {timerStatus === 'NOT_SET' || timerStatus === 'POMO_PAUSED'
-        ? 'Start'
-        : 'Pause'}
+      {timerStatus === 'TIMER_PAUSED' ? 'Pause' : 'Start'}
     </button>
   );
 };

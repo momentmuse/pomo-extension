@@ -6,15 +6,18 @@ class Timer extends Component {
   };
 
   render() {
-    const { timerDisplay } = this.props;
+    const { timerStatus, timerDisplay } = this.props;
     const minutes = timerDisplay.get('minutes');
     const seconds = timerDisplay.get('seconds');
     return (
-      <h2>
-        {`
+      <React.Fragment>
+        <h1>{timerStatus}</h1>
+        <h2>
+          {`
         ${this.padLeft(minutes)}:${this.padLeft(seconds)}
         `}
-      </h2>
+        </h2>
+      </React.Fragment>
     );
   }
 }

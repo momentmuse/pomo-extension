@@ -7,38 +7,42 @@ import TimerButton from './components/TimerButton';
 
 class App extends Component {
   state = {
-    pomoDuration: moment.duration(25, 'minutes'),
-    shortBreakDuration: moment.duration(5, 'minutes'),
-    longBreakDuration: moment.duration(20, 'minutes'),
-    timerDisplay: moment.duration(25, 'minutes'),
+    pomoDuration: moment.duration(6, 'seconds'),
+    shortBreakDuration: moment.duration(3, 'seconds'),
+    longBreakDuration: moment.duration(10, 'seconds'),
+    timerDisplay: moment.duration(6, 'seconds'),
     timerStatus: STATUSES.NOT_SET,
     countdown: null,
     pomoCounter: 0
   };
 
   toggleTimer = () => {
-    if (this.state.timerStatus !== 'POMO_RUNNING') {
+    if (this.state.timerStatus !== 'TIMER_RUNNING') {
       this.setState({
-        timerStatus: STATUSES.POMO_RUNNING,
+        timerStatus: STATUSES.TIMER_RUNNING,
         countdown: setInterval(this.reduceTimer, 1000)
       });
     } else {
       clearInterval(this.countdown);
       this.setState({
-        timerStatus: STATUSES.POMO_PAUSED,
+        timerStatus: STATUSES.TIMER_PAUSED,
         countdown: clearInterval(this.state.countdown)
       });
     }
   };
 
   reduceTimer = () => {
+    let { pomoCounter } = this.state;
+
     const timerFinished =
       this.state.timerDisplay.get('minutes') === 0 &&
       this.state.timerDisplay.get('seconds') === 0;
 
     if (timerFinished) {
       this.setState({
-        countdown: clearInterval(this.state.countdown)
+        countdown: clearInterval(this.state.countdown),
+        pomoCounter: ++pomoCounter,
+        timerStatus: STATUSES.NOT_SET
       });
       this.endTimer();
       return;
@@ -46,54 +50,59 @@ class App extends Component {
 
     const timerDisplay = moment.duration(this.state.timerDisplay);
     timerDisplay.subtract(1, 'second');
-
     this.setState({ timerDisplay });
   };
 
   endTimer = () => {
-    const { pomoDuration, pomoCounter, timerStatus } = this.state;
+    const { pomoCounter } = this.state;
 
-    if (pomoCounter === 4) {
-      this.setState({
-        timerStatus: STATUSES.POMO_COMPLETE,
-        timerDisplay: pomoDuration,
-        pomoCounter: 0
-      });
-      // handle the pomo complete somehow.. function?
-      // (render conditional screen with ability to restart)
-      return;
-    }
-
-    if (timerStatus === 'BREAK_RUNNING') {
-      this.setState({
-        timerDisplay: pomoDuration
-      });
+    if (pomoCounter === 8) {
+      this.completePomo();
+    } else {
+      this.setTimer();
       this.toggleTimer();
-    }
-
-    if (timerStatus === 'POMO_RUNNING') {
-      this.runBreak();
     }
   };
 
-  runBreak = () => {
-    let { pomoCounter, shortBreakDuration, longBreakDuration } = this.state;
+  setTimer = status => {
+    let {
+      pomoCounter,
+      pomoDuration,
+      shortBreakDuration,
+      longBreakDuration
+    } = this.state;
 
-    pomoCounter < 3
-      ? this.setState({
-          timerDisplay: shortBreakDuration
-        })
-      : this.setState({
-          timerDisplay: longBreakDuration
-        });
+    // IF BREAK RUNNING, want to set POMO
+    if (pomoCounter % 2 === 0) {
+      this.setState({
+        timerDisplay: pomoDuration
+      });
+    } else {
+      alert(
+        'HAY!!!!, the break time is being assigned, then it will run break time'
+      );
+      //IF POMO RUNNING, want to set BREAK
+      pomoCounter < 7
+        ? this.setState({
+            timerDisplay: shortBreakDuration
+          })
+        : this.setState({
+            timerDisplay: longBreakDuration
+          });
+    }
+  };
 
-    console.log('break is running! yay!!!', this.state.timerDisplay);
-
+  completePomo = () => {
+    const { pomoDuration } = this.state;
     this.setState({
-      timerStatus: STATUSES.BREAK_RUNNING,
-      countdown: setInterval(this.reduceTimer, 1000),
-      pomoCounter: ++pomoCounter
+      timerStatus: STATUSES.POMO_COMPLETE,
+      timerDisplay: pomoDuration,
+      pomoCounter: 0
     });
+    alert('full pomo finished! 🍅');
+    // handle the pomo complete somehow.. function?
+    // (render conditional screen with ability to restart)
+    return;
   };
 
   render() {
@@ -105,8 +114,9 @@ class App extends Component {
           <span role="img" aria-label="tomato and clock emoji">
             🍅 ⏰
           </span>
+          PomoCounter: {this.state.pomoCounter}
         </p>
-        <Timer timerDisplay={timerDisplay} />
+        <Timer timerDisplay={timerDisplay} timerStatus={timerStatus} />
         <TimerButton toggleTimer={this.toggleTimer} timerStatus={timerStatus} />
       </div>
     );
