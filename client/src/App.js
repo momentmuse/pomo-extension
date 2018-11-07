@@ -15,10 +15,15 @@ class App extends Component {
   };
 
   toggleTimer = () => {
-    this.setState({
-      timerStatus: STATUSES.POMO_RUNNING
-    });
-    console.log('🎉 here is ths timerStatus', this.state.timerStatus);
+    if (this.state.timerStatus !== 'POMO_RUNNING') {
+      this.setState({
+        timerStatus: STATUSES.POMO_RUNNING
+      });
+    } else {
+      this.setState({
+        timerStatus: STATUSES.POMO_PAUSED
+      });
+    }
   };
 
   render() {
