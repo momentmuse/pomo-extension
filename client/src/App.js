@@ -7,10 +7,10 @@ import TimerButton from './components/TimerButton';
 
 class App extends Component {
   state = {
-    pomoDuration: moment.duration(6, 'seconds'),
-    shortBreakDuration: moment.duration(3, 'seconds'),
-    longBreakDuration: moment.duration(10, 'seconds'),
-    timerDisplay: moment.duration(6, 'seconds'),
+    pomoDuration: moment.duration(5, 'minutes'),
+    shortBreakDuration: moment.duration(2, 'minutes'),
+    longBreakDuration: moment.duration(10, 'minutes'),
+    timerDisplay: moment.duration(5, 'minutes'),
     timerStatus: STATUSES.NOT_SET,
     countdown: null,
     pomoCounter: 0
@@ -31,6 +31,15 @@ class App extends Component {
     }
   };
 
+  resetTimer = () => {
+    this.setState({
+      timerStatus: STATUSES.NOT_SET,
+      timerDisplay: this.state.pomoDuration,
+      countdown: clearInterval(this.state.countdown),
+      pomoCounter: 0
+    });
+  };
+
   reduceTimer = () => {
     let { pomoCounter } = this.state;
 
@@ -44,7 +53,7 @@ class App extends Component {
         pomoCounter: ++pomoCounter,
         timerStatus: STATUSES.NOT_SET
       });
-      this.endTimer();
+      this.onTimerEnd();
       return;
     }
 
@@ -53,18 +62,18 @@ class App extends Component {
     this.setState({ timerDisplay });
   };
 
-  endTimer = () => {
+  onTimerEnd = () => {
     const { pomoCounter } = this.state;
 
     if (pomoCounter === 8) {
       this.completePomo();
     } else {
-      this.setTimer();
+      this.setTimerCycle();
       this.toggleTimer();
     }
   };
 
-  setTimer = status => {
+  setTimerCycle = status => {
     let {
       pomoCounter,
       pomoDuration,
@@ -78,9 +87,6 @@ class App extends Component {
         timerDisplay: pomoDuration
       });
     } else {
-      alert(
-        'HAY!!!!, the break time is being assigned, then it will run break time'
-      );
       //IF POMO RUNNING, want to set BREAK
       pomoCounter < 7
         ? this.setState({
@@ -117,7 +123,11 @@ class App extends Component {
           PomoCounter: {this.state.pomoCounter}
         </p>
         <Timer timerDisplay={timerDisplay} timerStatus={timerStatus} />
-        <TimerButton toggleTimer={this.toggleTimer} timerStatus={timerStatus} />
+        <TimerButton
+          toggleTimer={this.toggleTimer}
+          resetTimer={this.resetTimer}
+          timerStatus={timerStatus}
+        />
       </div>
     );
   }

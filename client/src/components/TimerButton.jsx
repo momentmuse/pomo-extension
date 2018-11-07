@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
 const TimerButton = props => {
-  const { toggleTimer, timerStatus } = props;
+  const { toggleTimer, resetTimer, timerStatus } = props;
   return (
-    <button onClick={toggleTimer}>
-      {timerStatus === 'TIMER_PAUSED' ? 'Pause' : 'Start'}
-    </button>
+    <React.Fragment>
+      <button onClick={toggleTimer}>
+        {timerStatus === 'TIMER_RUNNING' ? 'Pause' : 'Start'}
+      </button>
+      <button onClick={resetTimer}>Reset</button>
+    </React.Fragment>
   );
 };
 
