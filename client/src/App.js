@@ -9,8 +9,8 @@ class App extends Component {
   state = {
     pomoDuration: moment.duration(25, 'minutes'),
     shortBreakDuration: moment.duration(5, 'minutes'),
-    longBreakDuration: moment.duration(30, 'minutes'),
-    timerDisplay: moment.duration(1, 'minutes'),
+    longBreakDuration: moment.duration(20, 'minutes'),
+    timerDisplay: moment.duration(25, 'minutes'),
     timerStatus: STATUSES.NOT_SET,
     countdown: null,
     pomoCounter: 0
@@ -34,7 +34,7 @@ class App extends Component {
   reduceTimer = () => {
     const timerFinished =
       this.state.timerDisplay.get('minutes') === 0 &&
-      this.state.timerDisplay.get('minutes') === 0;
+      this.state.timerDisplay.get('seconds') === 0;
 
     if (timerFinished) {
       this.setState({
@@ -56,8 +56,12 @@ class App extends Component {
     if (pomoCounter === 4) {
       this.setState({
         timerStatus: STATUSES.POMO_COMPLETE,
+        timerDisplay: pomoDuration,
         pomoCounter: 0
       });
+      // handle the pomo complete somehow.. function?
+      // (render conditional screen with ability to restart)
+      return;
     }
 
     if (timerStatus === 'BREAK_RUNNING') {
