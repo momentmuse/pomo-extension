@@ -10,17 +10,11 @@ class App extends Component {
     pomoDuration: moment.duration(25, 'minutes'),
     shortBreakDuration: moment.duration(5, 'minutes'),
     longBreakDuration: moment.duration(30, 'minutes'),
-    timerDisplay: moment.duration(25, 'minutes'),
+    timerDisplay: moment.duration(1, 'minutes'),
     timerStatus: STATUSES.NOT_SET,
     countdown: null,
     pomoCounter: 0
   };
-
-  // componentDidMount() {
-  //   this.setState({
-  //     timerDisplay: this.state.pomoDuration
-  //   });
-  // }
 
   toggleTimer = () => {
     if (this.state.timerStatus !== 'POMO_RUNNING') {
@@ -38,12 +32,64 @@ class App extends Component {
   };
 
   reduceTimer = () => {
-    // if (this.state.timerDisplay);
+    const timerFinished =
+      this.state.timerDisplay.get('minutes') === 0 &&
+      this.state.timerDisplay.get('minutes') === 0;
+
+    if (timerFinished) {
+      this.setState({
+        countdown: clearInterval(this.state.countdown)
+      });
+      this.endTimer();
+      return;
+    }
 
     const timerDisplay = moment.duration(this.state.timerDisplay);
     timerDisplay.subtract(1, 'second');
 
     this.setState({ timerDisplay });
+  };
+
+  endTimer = () => {
+    const { pomoDuration, pomoCounter, timerStatus } = this.state;
+
+    if (pomoCounter === 4) {
+      this.setState({
+        timerStatus: STATUSES.POMO_COMPLETE,
+        pomoCounter: 0
+      });
+    }
+
+    if (timerStatus === 'BREAK_RUNNING') {
+      this.setState({
+        timerDisplay: pomoDuration
+      });
+      this.toggleTimer();
+    }
+
+    if (timerStatus === 'POMO_RUNNING') {
+      this.runBreak();
+    }
+  };
+
+  runBreak = () => {
+    let { pomoCounter, shortBreakDuration, longBreakDuration } = this.state;
+
+    pomoCounter < 3
+      ? this.setState({
+          timerDisplay: shortBreakDuration
+        })
+      : this.setState({
+          timerDisplay: longBreakDuration
+        });
+
+    console.log('break is running! yay!!!', this.state.timerDisplay);
+
+    this.setState({
+      timerStatus: STATUSES.BREAK_RUNNING,
+      countdown: setInterval(this.reduceTimer, 1000),
+      pomoCounter: ++pomoCounter
+    });
   };
 
   render() {
