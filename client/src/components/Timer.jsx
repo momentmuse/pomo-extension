@@ -6,9 +6,9 @@ class Timer extends Component {
   };
 
   render() {
-    const { pomoDuration } = this.props;
-    const minutes = pomoDuration.get('minutes');
-    const seconds = pomoDuration.get('seconds');
+    const { timerDisplay } = this.props;
+    const minutes = timerDisplay.get('minutes');
+    const seconds = timerDisplay.get('seconds');
     return (
       <h2>
         {`

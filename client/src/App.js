@@ -10,40 +10,44 @@ class App extends Component {
     pomoDuration: moment.duration(25, 'minutes'),
     shortBreakDuration: moment.duration(5, 'minutes'),
     longBreakDuration: moment.duration(30, 'minutes'),
+    timerDisplay: moment.duration(25, 'minutes'),
     timerStatus: STATUSES.NOT_SET,
-    timer: null,
+    countdown: null,
     pomoCounter: 0
   };
+
+  // componentDidMount() {
+  //   this.setState({
+  //     timerDisplay: this.state.pomoDuration
+  //   });
+  // }
 
   toggleTimer = () => {
     if (this.state.timerStatus !== 'POMO_RUNNING') {
       this.setState({
         timerStatus: STATUSES.POMO_RUNNING,
-        timer: setInterval(() => {
-          this.reduceTimer('pomoDuration');
-        }, 1000)
+        countdown: setInterval(this.reduceTimer, 1000)
       });
     } else {
-      clearInterval(this.timer);
+      clearInterval(this.countdown);
       this.setState({
         timerStatus: STATUSES.POMO_PAUSED,
-        timer: clearInterval(this.state.timer)
+        countdown: clearInterval(this.state.countdown)
       });
     }
   };
 
-  // reuse this code for the break timer countdown
-  reduceTimer = duration => {
-    const newTime = moment.duration(this.state[duration]);
-    newTime.subtract(1, 'second');
+  reduceTimer = () => {
+    // if (this.state.timerDisplay);
 
-    this.setState({
-      [duration]: newTime
-    });
+    const timerDisplay = moment.duration(this.state.timerDisplay);
+    timerDisplay.subtract(1, 'second');
+
+    this.setState({ timerDisplay });
   };
 
   render() {
-    const { pomoDuration, timerStatus } = this.state;
+    const { timerDisplay, timerStatus } = this.state;
     return (
       <div className="App">
         <p>
@@ -52,7 +56,7 @@ class App extends Component {
             🍅 ⏰
           </span>
         </p>
-        <Timer pomoDuration={pomoDuration} />
+        <Timer timerDisplay={timerDisplay} />
         <TimerButton toggleTimer={this.toggleTimer} timerStatus={timerStatus} />
       </div>
     );
