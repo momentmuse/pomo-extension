@@ -11,19 +11,35 @@ class App extends Component {
     shortBreakDuration: moment.duration(5, 'minutes'),
     longBreakDuration: moment.duration(30, 'minutes'),
     timerStatus: STATUSES.NOT_SET,
+    timer: null,
     pomoCounter: 0
   };
 
   toggleTimer = () => {
     if (this.state.timerStatus !== 'POMO_RUNNING') {
       this.setState({
-        timerStatus: STATUSES.POMO_RUNNING
+        timerStatus: STATUSES.POMO_RUNNING,
+        timer: setInterval(() => {
+          this.reduceTimer('pomoDuration');
+        }, 1000)
       });
     } else {
+      clearInterval(this.timer);
       this.setState({
-        timerStatus: STATUSES.POMO_PAUSED
+        timerStatus: STATUSES.POMO_PAUSED,
+        timer: clearInterval(this.state.timer)
       });
     }
+  };
+
+  // reuse this code for the break timer countdown
+  reduceTimer = duration => {
+    const newTime = moment.duration(this.state[duration]);
+    newTime.subtract(1, 'second');
+
+    this.setState({
+      [duration]: newTime
+    });
   };
 
   render() {
