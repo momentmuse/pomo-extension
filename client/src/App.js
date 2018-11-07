@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import STATUSES from './timer-status';
 import './App.css';
 import Timer from './components/Timer';
-import STATUSES from './timer-states';
+import TimerButton from './components/TimerButton';
 
 class App extends Component {
   state = {
@@ -13,8 +14,15 @@ class App extends Component {
     pomoCounter: 0
   };
 
+  toggleTimer = () => {
+    this.setState({
+      timerStatus: STATUSES.POMO_RUNNING
+    });
+    console.log('🎉 here is ths timerStatus', this.state.timerStatus);
+  };
+
   render() {
-    let { pomoDuration } = this.state;
+    const { pomoDuration, timerStatus } = this.state;
     return (
       <div className="App">
         <p>
@@ -24,6 +32,7 @@ class App extends Component {
           </span>
         </p>
         <Timer pomoDuration={pomoDuration} />
+        <TimerButton toggleTimer={this.toggleTimer} timerStatus={timerStatus} />
       </div>
     );
   }
