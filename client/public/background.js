@@ -8,11 +8,11 @@ var STATUSES = {
 };
 
 var timer = {
-  pomoDuration: moment.duration(5, 'seconds'),
-  shortBreakDuration: moment.duration(3, 'seconds'),
-  longBreakDuration: moment.duration(5, 'seconds'),
+  pomoDuration: moment.duration(25, 'minutes'),
+  shortBreakDuration: moment.duration(5, 'minutes'),
+  longBreakDuration: moment.duration(15, 'minutes'),
   countdownID: null,
-  remaining: moment.duration(5, 'seconds'),
+  remaining: moment.duration(25, 'minutes'),
   timerStatus: STATUSES.NOT_SET,
   pomoCount: 0
 };
@@ -60,8 +60,10 @@ var onTimerEnd = function() {
 
 var setTimerCycle = function() {
   if (timer.pomoCount % 2 === 0) {
+    alert('Back to work! 📚');
     timer.remaining = timer.pomoDuration;
   } else {
+    alert('Take a break! 🐣');
     timer.pomoCount < 7
       ? (timer.remaining = timer.shortBreakDuration)
       : (timer.remaining = timer.longBreakDuration);

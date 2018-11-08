@@ -1,7 +1,6 @@
 /*global chrome*/
 
 import React, { Component } from 'react';
-import moment from 'moment';
 import './App.css';
 import TimerDisplay from './components/TimerDisplay';
 import TimerButton from './components/TimerButton';
