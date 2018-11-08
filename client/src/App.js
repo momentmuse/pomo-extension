@@ -7,16 +7,10 @@ import TimerDisplay from './components/TimerDisplay';
 import TimerButton from './components/TimerButton';
 
 class App extends Component {
-  // state is not changing even though the background page values are changing
   state = {
-    // countdownID: chrome.extension.getBackgroundPage().timer.countdownID,
-    // timerDisplay: chrome.extension.getBackgroundPage().timer.remaining,
-    // timerStatus: chrome.extension.getBackgroundPage().timer.timerStatus,
-    // pomoCounter: chrome.extension.getBackgroundPage().timer.pomoCount,
     background: chrome.extension.getBackgroundPage()
   };
 
-  // state changes and the app rerenders when the window is closed and opened
   componentDidMount() {
     setInterval(
       () =>
