@@ -8,16 +8,20 @@ var STATUSES = {
 };
 
 var timer = {
-  pomoDuration: moment.duration(6, 'seconds'),
+  pomoDuration: moment.duration(5, 'seconds'),
   shortBreakDuration: moment.duration(3, 'seconds'),
-  longBreakDuration: moment.duration(10, 'seconds'),
+  longBreakDuration: moment.duration(5, 'seconds'),
   countdownID: null,
-  remaining: moment.duration(6, 'seconds'),
+  remaining: moment.duration(5, 'seconds'),
   timerStatus: STATUSES.NOT_SET,
   pomoCount: 0
 };
 
 var toggleTimer = function() {
+  if (timer.timerStatus === 'POMO_COMPLETE') {
+    timer.remaining = timer.pomoDuration;
+  }
+
   if (timer.timerStatus !== 'TIMER_RUNNING') {
     timer.timerStatus = STATUSES.TIMER_RUNNING;
     timer.countdownID = setInterval(this.reduceTimer, 1000);
@@ -47,7 +51,7 @@ var reduceTimer = function() {
 
 var onTimerEnd = function() {
   if (timer.pomoCount === 8) {
-    this.completePomo();
+    this.resetTimer('POMO_COMPLETE');
   } else {
     this.setTimerCycle();
     this.toggleTimer();
@@ -64,15 +68,8 @@ var setTimerCycle = function() {
   }
 };
 
-var completePomo = function() {
-  timer.timerStatus = STATUSES.POMO_COMPLETE;
-  timer.countdownID = clearInterval(timer.countdownID);
-  timer.remaining = this.state.pomoDuration;
-  timer.pomoCount = 0;
-};
-
-var resetTimer = function() {
-  timer.timerStatus = STATUSES.NOT_SET;
+var resetTimer = function(status) {
+  timer.timerStatus = STATUSES[status];
   timer.countdownID = clearInterval(timer.countdownID);
   timer.remaining = timer.pomoDuration;
   timer.pomoCount = 0;

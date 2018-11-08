@@ -32,8 +32,7 @@ class App extends Component {
   };
 
   resetTimer = () => {
-    this.state.background.resetTimer();
-    console.log('time is', this.state.timerDisplay);
+    this.state.background.resetTimer('NOT_SET');
   };
 
   render() {
