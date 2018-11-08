@@ -7,14 +7,16 @@ import TimerDisplay from './components/TimerDisplay';
 import TimerButton from './components/TimerButton';
 
 class App extends Component {
+  // state is not changing even though the background page values are changing
   state = {
-    countdownID: chrome.extension.getBackgroundPage().timer.countdownID,
-    timerDisplay: chrome.extension.getBackgroundPage().timer.remaining,
-    timerStatus: chrome.extension.getBackgroundPage().timer.timerStatus,
-    pomoCounter: chrome.extension.getBackgroundPage().timer.pomoCount,
+    // countdownID: chrome.extension.getBackgroundPage().timer.countdownID,
+    // timerDisplay: chrome.extension.getBackgroundPage().timer.remaining,
+    // timerStatus: chrome.extension.getBackgroundPage().timer.timerStatus,
+    // pomoCounter: chrome.extension.getBackgroundPage().timer.pomoCount,
     background: chrome.extension.getBackgroundPage()
   };
 
+  // state changes and the app rerenders when the window is closed and opened
   componentDidMount() {
     setInterval(
       () =>
@@ -31,10 +33,11 @@ class App extends Component {
 
   resetTimer = () => {
     this.state.background.resetTimer();
+    console.log('time is', this.state.timerDisplay);
   };
 
   render() {
-    const { timerDisplay, timerStatus, pomoCounter } = this.state;
+    const { timer } = this.state.background;
     return (
       <div className="App">
         <p>
@@ -42,17 +45,17 @@ class App extends Component {
           <span role="img" aria-label="tomato and clock emoji">
             🍅 ⏰
           </span>
-          PomoCounter: {this.state.pomoCounter}
+          PomoCounter: {timer.pomoCount}
         </p>
         <TimerDisplay
-          timerDisplay={timerDisplay}
-          timerStatus={timerStatus}
-          pomoCounter={pomoCounter}
+          timerDisplay={timer.remaining}
+          timerStatus={timer.timerStatus}
+          pomoCounter={timer.pomoCount}
         />
         <TimerButton
           toggleTimer={this.toggleTimer}
           resetTimer={this.resetTimer}
-          timerStatus={timerStatus}
+          timerStatus={timer.timerStatus}
         />
       </div>
     );
