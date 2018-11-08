@@ -73,7 +73,7 @@ class App extends Component {
     }
   };
 
-  setTimerCycle = status => {
+  setTimerCycle = () => {
     let {
       pomoCounter,
       pomoDuration,
