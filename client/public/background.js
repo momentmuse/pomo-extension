@@ -1,15 +1,4 @@
 /*global chrome*/
-// import moment from './moment.js';
-// var { moment } = require('./moment.js');
-
-// var timerDisp = {
-//   count: 0
-// };
-
-// setInterval(() => {
-//   console.log('yay it works 👾', timerDisp.count);
-//   timerDisp.count++;
-// }, 1000);
 
 var STATUSES = {
   NOT_SET: 'NOT_SET',
