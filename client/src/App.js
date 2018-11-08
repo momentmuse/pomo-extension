@@ -1,9 +1,19 @@
+/*global chrome*/
+
 import React, { Component } from 'react';
 import moment from 'moment';
 import STATUSES from './timer-status';
 import './App.css';
-import Timer from './components/Timer';
+import TimerDisplay from './components/TimerDisplay';
 import TimerButton from './components/TimerButton';
+
+// const background = chrome.extension.getBackgroundPage();
+// setInterval(() => {
+//   console.log('------------');
+//   console.log('background', background.timerDisplay.count);
+//   console.log('------------');
+// }, 1000);
+// background.timerDisplay.count
 
 class App extends Component {
   state = {
@@ -13,8 +23,15 @@ class App extends Component {
     timerDisplay: moment.duration(6, 'seconds'),
     timerStatus: STATUSES.NOT_SET,
     countdown: null,
-    pomoCounter: 0
+    pomoCounter: 0,
+    background: null
   };
+
+  componentWillMount() {
+    this.setState(() => ({
+      background: chrome.extension.getBackgroundPage()
+    }));
+  }
 
   toggleTimer = () => {
     if (this.state.timerStatus !== 'TIMER_RUNNING') {
@@ -107,7 +124,10 @@ class App extends Component {
   };
 
   render() {
-    const { timerDisplay, timerStatus, pomoCounter } = this.state;
+    // setInterval(() => {
+    //   console.log('hi this is the background', this.state.background.aa);
+    // }, 1000);
+    const { timerDisplay, timerStatus, pomoCounter, background } = this.state;
     return (
       <div className="App">
         <p>
@@ -117,7 +137,8 @@ class App extends Component {
           </span>
           PomoCounter: {this.state.pomoCounter}
         </p>
-        <Timer
+        <h1>BG Count: {background.timerDisp.count}</h1>
+        <TimerDisplay
           timerDisplay={timerDisplay}
           timerStatus={timerStatus}
           pomoCounter={pomoCounter}

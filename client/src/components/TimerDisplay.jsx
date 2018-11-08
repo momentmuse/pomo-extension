@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Timer extends Component {
+class TimerDisplay extends Component {
   padLeft = num => {
     return num < 10 ? `0${num}` : num;
   };
@@ -26,4 +26,4 @@ class Timer extends Component {
   }
 }
 
-export default Timer;
+export default TimerDisplay;

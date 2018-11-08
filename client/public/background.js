@@ -1,12 +1,12 @@
 /*global chrome*/
 
-let count = 0;
+var timerDisp = {
+  count: 0
+};
 
 setInterval(() => {
-  console.log('yay it works 👾', count);
-  count++;
+  console.log('yay it works 👾', timerDisp.count);
+  timerDisp.count++;
 }, 1000);
 
-// chrome.browserAction.getPopup(object, () => {
-//   console.log('lalalalala', object);
-// });
+console.log('-----', window);
