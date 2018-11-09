@@ -4,9 +4,11 @@ const TimerButton = props => {
   const { toggleTimer, resetTimer, timerStatus } = props;
   return (
     <React.Fragment>
-      <button onClick={toggleTimer}>
-        {timerStatus === 'TIMER_RUNNING' ? 'Pause' : 'Start'}
-      </button>
+      {timerStatus !== 'POMO_COMPLETE' && (
+        <button onClick={toggleTimer}>
+          {timerStatus === 'TIMER_RUNNING' ? 'Pause' : 'Start'}
+        </button>
+      )}
       <button onClick={resetTimer}>Reset</button>
     </React.Fragment>
   );

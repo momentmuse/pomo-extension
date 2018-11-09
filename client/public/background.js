@@ -7,7 +7,12 @@ var blockRequest = function(details) {
 };
 
 // need to check for timer.timerStatus === 'TIMER_RUNNING'
-var updateBlockFilters = function(urls) {
+var toggleBlockFilters = function(urls) {
+  // var studyMode =
+  //   timer.pomoCount % 2 === 0 && timer.timerStatus === 'TIMER_PAUSED';
+  // console.log('🚀 ---TCL--- 🚀 toggleBlockFilters -> studyMode', studyMode);
+  // if (studyMode) return;
+
   chrome.webRequest.onBeforeRequest.hasListener(blockRequest)
     ? chrome.webRequest.onBeforeRequest.removeListener(blockRequest)
     : chrome.webRequest.onBeforeRequest.addListener(
@@ -25,8 +30,6 @@ var someUrls = [
   '*://www.youtube.com/*'
 ];
 
-updateBlockFilters(someUrls);
-
 var STATUSES = {
   NOT_SET: 'NOT_SET',
   TIMER_RUNNING: 'TIMER_RUNNING',
@@ -35,21 +38,18 @@ var STATUSES = {
 };
 
 var timer = {
-  pomoDuration: moment.duration(25, 'seconds'),
-  shortBreakDuration: moment.duration(15, 'seconds'),
-  longBreakDuration: moment.duration(20, 'seconds'),
+  pomoDuration: moment.duration(5, 'seconds'),
+  shortBreakDuration: moment.duration(3, 'seconds'),
+  longBreakDuration: moment.duration(8, 'seconds'),
   countdownID: null,
-  remaining: moment.duration(25, 'seconds'),
+  remaining: moment.duration(5, 'seconds'),
   timerStatus: STATUSES.NOT_SET,
   pomoCount: 0
 };
 
 var toggleTimer = function() {
-  if (timer.timerStatus === 'POMO_COMPLETE') {
-    timer.remaining = timer.pomoDuration;
-  }
-
   if (timer.timerStatus !== 'TIMER_RUNNING') {
+    this.toggleBlockFilters(someUrls);
     timer.timerStatus = STATUSES.TIMER_RUNNING;
     timer.countdownID = setInterval(this.reduceTimer, 1000);
   } else {
@@ -80,7 +80,7 @@ var reduceTimer = function() {
 
 var onTimerEnd = function() {
   // filter block permissions?
-  this.updateBlockFilters(someUrls);
+  this.toggleBlockFilters(someUrls);
   if (timer.pomoCount === 8) {
     this.resetTimer('POMO_COMPLETE');
   } else {
@@ -102,12 +102,9 @@ var setTimerCycle = function() {
 };
 
 var resetTimer = function(status) {
+  this.toggleBlockFilters(someUrls);
   timer.timerStatus = STATUSES[status];
   timer.countdownID = clearInterval(timer.countdownID);
   timer.remaining = timer.pomoDuration;
   timer.pomoCount = 0;
 };
-
-setInterval(() => {
-  console.log('timer.remaining', timer.remaining);
-}, 1000);
