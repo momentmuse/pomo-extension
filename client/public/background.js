@@ -26,13 +26,10 @@ var blockRequest = function(details) {
 
 // need to check for timer.timerStatus === 'TIMER_RUNNING'
 var toggleBlockFilters = function(urls) {
-  chrome.webRequest.onBeforeRequest.hasListener(blockRequest)
-    ? chrome.webRequest.onBeforeRequest.removeListener(blockRequest)
-    : chrome.webRequest.onBeforeRequest.addListener(
-        blockRequest,
-        { urls: urls },
-        ['blocking']
-      );
+  var request = chrome.webRequest.onBeforeRequest;
+  request.hasListener(blockRequest)
+    ? request.removeListener(blockRequest)
+    : request.addListener(blockRequest, { urls: urls }, ['blocking']);
 };
 
 var STATUSES = {
@@ -74,7 +71,7 @@ var reduceTimer = function() {
   if (timerFinished) {
     timer.countdownID = clearInterval(timer.countdownID);
     // pomoCount must be increased before status is set
-    timer.pomoCount = ++timer.pomoCount;
+    ++timer.pomoCount;
     // this line causes the next cycle to auto-run
     // delete for manual initiation (deleting this will break the block functionality)
     timer.timerStatus = STATUSES.NOT_SET;
