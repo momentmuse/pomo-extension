@@ -6,7 +6,7 @@ class TimerDisplay extends Component {
   };
 
   render() {
-    const { timerStatus, timerDisplay, pomoCounter } = this.props;
+    const { timerStatus, timerDisplay, pomoCount } = this.props;
     const minutes = timerDisplay.get('minutes');
     const seconds = timerDisplay.get('seconds');
     return (
@@ -18,7 +18,7 @@ class TimerDisplay extends Component {
         `}
         </h2>
         {timerStatus === 'TIMER_RUNNING' && (
-          <h2>{pomoCounter % 2 === 0 ? 'Study! 📖' : 'Take a break ☕️'}</h2>
+          <h2>{pomoCount % 2 === 0 ? 'Study! 📖' : 'Take a break ☕️'}</h2>
         )}
         {timerStatus === 'POMO_COMPLETE' && <h1>'Well done! 🍅'</h1>}
       </React.Fragment>

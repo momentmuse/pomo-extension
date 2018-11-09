@@ -37,12 +37,12 @@ class App extends Component {
           <span role="img" aria-label="tomato and clock emoji">
             🍅 ⏰
           </span>
-          PomoCounter: {timer.pomoCount}
+          Pomo Counter: {timer.pomoCount}
         </p>
         <TimerDisplay
           timerDisplay={timer.remaining}
           timerStatus={timer.timerStatus}
-          pomoCounter={timer.pomoCount}
+          pomoCount={timer.pomoCount}
         />
         <TimerButton
           toggleTimer={this.toggleTimer}

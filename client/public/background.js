@@ -1,4 +1,30 @@
 /*global chrome*/
+// import moment from 'moment';
+// import swal from 'sweetalert';
+
+var blockRequest = function(details) {
+  return { cancel: true };
+};
+
+var updateBlockFilters = function(urls) {
+  chrome.webRequest.onBeforeRequest.hasListener(blockRequest)
+    ? chrome.webRequest.onBeforeRequest.removeListener(blockRequest)
+    : chrome.webRequest.onBeforeRequest.addListener(
+        blockRequest,
+        { urls: urls },
+        ['blocking']
+      );
+};
+
+// create options dialog in pop-up
+// save this to chrome.storage with sync
+var someUrls = [
+  '*://www.facebook.com/*',
+  '*://www.reddit.com/*',
+  '*://www.youtube.com/*'
+];
+
+updateBlockFilters(someUrls);
 
 var STATUSES = {
   NOT_SET: 'NOT_SET',
@@ -8,11 +34,11 @@ var STATUSES = {
 };
 
 var timer = {
-  pomoDuration: moment.duration(25, 'minutes'),
-  shortBreakDuration: moment.duration(5, 'minutes'),
-  longBreakDuration: moment.duration(15, 'minutes'),
+  pomoDuration: moment.duration(25, 'seconds'),
+  shortBreakDuration: moment.duration(15, 'seconds'),
+  longBreakDuration: moment.duration(20, 'seconds'),
   countdownID: null,
-  remaining: moment.duration(25, 'minutes'),
+  remaining: moment.duration(25, 'seconds'),
   timerStatus: STATUSES.NOT_SET,
   pomoCount: 0
 };
@@ -37,9 +63,11 @@ var reduceTimer = function() {
     timer.remaining.get('seconds') === 0;
 
   if (timerFinished) {
+    // this line causes the next cycle to auto-run
+    // delete for manual initiation
+    timer.timerStatus = STATUSES.NOT_SET;
     timer.countdownID = clearInterval(timer.countdownID);
     timer.pomoCount = ++timer.pomoCount;
-    timer.timerStatus = STATUSES.NOT_SET;
     this.onTimerEnd();
     return;
   }
@@ -50,6 +78,8 @@ var reduceTimer = function() {
 };
 
 var onTimerEnd = function() {
+  // filter block permissions?
+  this.updateBlockFilters(someUrls);
   if (timer.pomoCount === 8) {
     this.resetTimer('POMO_COMPLETE');
   } else {

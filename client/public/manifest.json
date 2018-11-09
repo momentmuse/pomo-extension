@@ -1,6 +1,6 @@
 {
   "short_name": "React App",
-  "name": "React Pomo Extension",
+  "name": "Pomo Extension",
   "manifest_version": 2,
   "version": "1.0",
   "icons": {
@@ -8,14 +8,20 @@
     "32": "icon_32.png",
     "128": "icon_128.png"
   },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "http://*/*",
+    "https://*/*"
+  ],
   "browser_action": {
     "default_icon": "icon_16.png",
     "default_popup": "index.html",
     "default_title": "Pomo"
   },
   "background": {
-    "scripts": ["moment.js", "background.js"],
-    "persistent": false
+    "scripts": ["moment.js", "sweetalert.min.js", "background.js"],
+    "persistent": true
   },
-  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk=' object-src 'self'"
+  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
 }
