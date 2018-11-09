@@ -1,19 +1,23 @@
 {
-  "short_name": "React App",
+  "short_name": "PomoEx",
   "name": "Pomo Extension",
   "manifest_version": 2,
   "version": "1.0",
+  "description": "An adorably lightweight focus helper and site blocker.",
   "icons": {
     "16": "icon_16.png",
     "32": "icon_32.png",
     "128": "icon_128.png"
   },
   "permissions": [
+    "activeTab",
+    "storage",
     "webRequest",
     "webRequestBlocking",
     "http://*/*",
     "https://*/*"
   ],
+  "options_page": "options.html",
   "browser_action": {
     "default_icon": "icon_16.png",
     "default_popup": "index.html",

@@ -1,6 +1,24 @@
 /*global chrome*/
-// import moment from 'moment';
-// import swal from 'sweetalert';
+
+// IMPORTANT: background.js page is not compatible with let, const, and other ES6 features
+
+// var openOptions = function() {
+//   window.open(chrome.runtime.getURL('options.html'));
+// };
+
+// create options dialog in pop-up
+// save this to chrome.storage with sync
+var someUrls = [
+  '*://www.facebook.com/*',
+  '*://www.reddit.com/*',
+  '*://www.youtube.com/*',
+  '*://www.instagram.com/*'
+];
+
+var blockCurrentTab = function() {
+  console.log('lalalala 🎼');
+  // chrome.tabs.query ... may have to put into a content script?
+};
 
 var blockRequest = function(details) {
   return { cancel: true };
@@ -17,14 +35,6 @@ var toggleBlockFilters = function(urls) {
       );
 };
 
-// create options dialog in pop-up
-// save this to chrome.storage with sync
-var someUrls = [
-  '*://www.facebook.com/*',
-  '*://www.reddit.com/*',
-  '*://www.youtube.com/*'
-];
-
 var STATUSES = {
   NOT_SET: 'NOT_SET',
   TIMER_RUNNING: 'TIMER_RUNNING',
@@ -33,11 +43,11 @@ var STATUSES = {
 };
 
 var timer = {
-  pomoDuration: moment.duration(15, 'seconds'),
-  shortBreakDuration: moment.duration(10, 'seconds'),
+  pomoDuration: moment.duration(25, 'seconds'),
+  shortBreakDuration: moment.duration(15, 'seconds'),
   longBreakDuration: moment.duration(15, 'seconds'),
   countdownID: null,
-  remaining: moment.duration(15, 'seconds'),
+  remaining: moment.duration(25, 'seconds'),
   timerStatus: STATUSES.NOT_SET,
   pomoCount: 0
 };
@@ -80,6 +90,7 @@ var reduceTimer = function() {
 var onTimerEnd = function() {
   // filter block permissions?
   toggleBlockFilters(someUrls);
+
   if (timer.pomoCount === 8) {
     resetTimer('POMO_COMPLETE');
   } else {

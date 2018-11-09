@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import './App.css';
 import TimerDisplay from './components/TimerDisplay';
 import TimerButton from './components/TimerButton';
+import TimerConfig from './components/TimerConfig';
 
 class App extends Component {
   state = {
@@ -28,10 +29,23 @@ class App extends Component {
     this.state.background.resetTimer('NOT_SET');
   };
 
+  // openOptions = () => {
+  //   this.state.background.openOptions();
+  // };
+
+  blockCurrentTab = () => {
+    console.log('👾 Blocking the current tab! Wooo!');
+    this.state.background.blockCurrentTab();
+  };
+
   render() {
     const { timer } = this.state.background;
     return (
       <div className="App">
+        <TimerConfig
+          openOptions={this.openOptions}
+          blockCurrentTab={this.blockCurrentTab}
+        />
         <p>
           Pomo{' '}
           <span role="img" aria-label="tomato and clock emoji">
