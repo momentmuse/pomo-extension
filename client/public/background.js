@@ -44,13 +44,12 @@ var timer = {
 
 var toggleTimer = function() {
   if (timer.timerStatus === 'NOT_SET' && timer.pomoCount === 0) {
-    console.log('--HEY it is trying to init set blockers--');
-    this.toggleBlockFilters(someUrls);
+    toggleBlockFilters(someUrls);
   }
 
   if (timer.timerStatus !== 'TIMER_RUNNING') {
     timer.timerStatus = STATUSES.TIMER_RUNNING;
-    timer.countdownID = setInterval(this.reduceTimer, 1000);
+    timer.countdownID = setInterval(reduceTimer, 1000);
   } else {
     timer.countdownID = clearInterval(timer.countdownID);
     timer.timerStatus = STATUSES.TIMER_PAUSED;
@@ -69,7 +68,7 @@ var reduceTimer = function() {
     // this line causes the next cycle to auto-run
     // delete for manual initiation (deleting this will break the block functionality)
     timer.timerStatus = STATUSES.NOT_SET;
-    this.onTimerEnd();
+    onTimerEnd();
     return;
   }
 
@@ -80,13 +79,12 @@ var reduceTimer = function() {
 
 var onTimerEnd = function() {
   // filter block permissions?
-  this.toggleBlockFilters(someUrls);
-  console.log('--toggle block on timer End!--');
+  toggleBlockFilters(someUrls);
   if (timer.pomoCount === 8) {
-    this.resetTimer('POMO_COMPLETE');
+    resetTimer('POMO_COMPLETE');
   } else {
-    this.setTimerCycle();
-    this.toggleTimer();
+    setTimerCycle();
+    toggleTimer();
   }
 };
 
