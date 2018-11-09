@@ -15,16 +15,13 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // setInterval(
-    //   () =>
-    //     this.setState({
-    //       background: chrome.extension.getBackgroundPage()
-    //     }),
-    //   500
-    // );
-    this.setState({
-      background: chrome.extension.getBackgroundPage()
-    });
+    setInterval(
+      () =>
+        this.setState({
+          background: chrome.extension.getBackgroundPage()
+        }),
+      500
+    );
   }
 
   toggleTimer = () => {
@@ -43,8 +40,6 @@ class App extends Component {
       : this.setState({
           display: 'timer'
         });
-
-    console.log('stateeee', this.state.display);
   };
 
   blockCurrentTab = () => {
@@ -56,13 +51,16 @@ class App extends Component {
     const { timer } = this.state.background;
     return (
       <div className="App">
+        <TimerConfig
+          toggleOptions={this.toggleOptions}
+          blockCurrentTab={this.blockCurrentTab}
+          display={this.state.display}
+          timerStatus={timer.timerStatus}
+          pomoCount={timer.pomoCount}
+        />
+
         {this.state.display === 'timer' ? (
           <div className="app-timer">
-            <TimerConfig
-              toggleOptions={this.toggleOptions}
-              blockCurrentTab={this.blockCurrentTab}
-              display={this.state.display}
-            />
             🍅 Pomo Counter: {timer.pomoCount} ⏰
             <TimerDisplay
               timerDisplay={timer.remaining}
@@ -77,10 +75,6 @@ class App extends Component {
           </div>
         ) : (
           <div className="app-options">
-            <TimerConfig
-              toggleOptions={this.toggleOptions}
-              blockCurrentTab={this.blockCurrentTab}
-            />
             <BlockForm />
             <BlockList />
           </div>

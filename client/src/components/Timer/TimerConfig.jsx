@@ -1,12 +1,26 @@
 import React from 'react';
 
 const TimerConfig = props => {
-  console.log('proppssss heee', props);
-  const { toggleOptions, blockCurrentTab, display } = props;
+  const {
+    toggleOptions,
+    blockCurrentTab,
+    display,
+    timerStatus,
+    pomoCount
+  } = props;
+
+  const studyMode =
+    (timerStatus === 'TIMER_RUNNING' || timerStatus === 'TIMER_PAUSED') &&
+    pomoCount % 2 === 0;
+
   return (
     <React.Fragment>
-      {!display && <button onClick={blockCurrentTab}>Block!</button>}
-      <button onClick={toggleOptions}>{display ? 'Options' : 'Timer'}</button>
+      {display === 'options' && (
+        <button onClick={blockCurrentTab}>Block!</button>
+      )}
+      <button onClick={toggleOptions} disabled={studyMode ? true : false}>
+        {display === 'timer' ? 'Options' : 'Timer'}
+      </button>
     </React.Fragment>
   );
 };
