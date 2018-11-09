@@ -1,12 +1,12 @@
 import React from 'react';
 
 const TimerConfig = props => {
+  console.log('proppssss heee', props);
   const { toggleOptions, blockCurrentTab, display } = props;
-  console.log('🚀 ---TCL--- 🚀 display', display);
   return (
     <React.Fragment>
-      {display === 1 && <button onClick={blockCurrentTab}>Block!</button>}
-      <button onClick={toggleOptions}>Options</button>
+      {!display && <button onClick={blockCurrentTab}>Block!</button>}
+      <button onClick={toggleOptions}>{display ? 'Options' : 'Timer'}</button>
     </React.Fragment>
   );
 };

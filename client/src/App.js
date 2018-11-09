@@ -10,18 +10,21 @@ import BlockList from './components/Options/BlockList';
 
 class App extends Component {
   state = {
-    display: 0,
+    display: 'timer',
     background: chrome.extension.getBackgroundPage()
   };
 
   componentDidMount() {
-    setInterval(
-      () =>
-        this.setState({
-          background: chrome.extension.getBackgroundPage()
-        }),
-      500
-    );
+    // setInterval(
+    //   () =>
+    //     this.setState({
+    //       background: chrome.extension.getBackgroundPage()
+    //     }),
+    //   500
+    // );
+    this.setState({
+      background: chrome.extension.getBackgroundPage()
+    });
   }
 
   toggleTimer = () => {
@@ -33,13 +36,15 @@ class App extends Component {
   };
 
   toggleOptions = () => {
-    this.state.display === 0
+    this.state.display === 'timer'
       ? this.setState({
-          display: 1
+          display: 'options'
         })
       : this.setState({
-          display: 0
+          display: 'timer'
         });
+
+    console.log('stateeee', this.state.display);
   };
 
   blockCurrentTab = () => {
@@ -51,7 +56,7 @@ class App extends Component {
     const { timer } = this.state.background;
     return (
       <div className="App">
-        {this.state.display === 0 ? (
+        {this.state.display === 'timer' ? (
           <div className="app-timer">
             <TimerConfig
               toggleOptions={this.toggleOptions}
