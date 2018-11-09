@@ -8,11 +8,6 @@ var blockRequest = function(details) {
 
 // need to check for timer.timerStatus === 'TIMER_RUNNING'
 var toggleBlockFilters = function(urls) {
-  // var studyMode =
-  //   timer.pomoCount % 2 === 0 && timer.timerStatus === 'TIMER_PAUSED';
-  // console.log('🚀 ---TCL--- 🚀 toggleBlockFilters -> studyMode', studyMode);
-  // if (studyMode) return;
-
   chrome.webRequest.onBeforeRequest.hasListener(blockRequest)
     ? chrome.webRequest.onBeforeRequest.removeListener(blockRequest)
     : chrome.webRequest.onBeforeRequest.addListener(
@@ -38,18 +33,22 @@ var STATUSES = {
 };
 
 var timer = {
-  pomoDuration: moment.duration(5, 'seconds'),
-  shortBreakDuration: moment.duration(3, 'seconds'),
-  longBreakDuration: moment.duration(8, 'seconds'),
+  pomoDuration: moment.duration(15, 'seconds'),
+  shortBreakDuration: moment.duration(10, 'seconds'),
+  longBreakDuration: moment.duration(15, 'seconds'),
   countdownID: null,
-  remaining: moment.duration(5, 'seconds'),
+  remaining: moment.duration(15, 'seconds'),
   timerStatus: STATUSES.NOT_SET,
   pomoCount: 0
 };
 
 var toggleTimer = function() {
-  if (timer.timerStatus !== 'TIMER_RUNNING') {
+  if (timer.timerStatus === 'NOT_SET' && timer.pomoCount === 0) {
+    console.log('--HEY it is trying to init set blockers--');
     this.toggleBlockFilters(someUrls);
+  }
+
+  if (timer.timerStatus !== 'TIMER_RUNNING') {
     timer.timerStatus = STATUSES.TIMER_RUNNING;
     timer.countdownID = setInterval(this.reduceTimer, 1000);
   } else {
@@ -64,11 +63,12 @@ var reduceTimer = function() {
     timer.remaining.get('seconds') === 0;
 
   if (timerFinished) {
-    // this line causes the next cycle to auto-run
-    // delete for manual initiation
-    timer.timerStatus = STATUSES.NOT_SET;
     timer.countdownID = clearInterval(timer.countdownID);
+    // pomoCount must be increased before status is set
     timer.pomoCount = ++timer.pomoCount;
+    // this line causes the next cycle to auto-run
+    // delete for manual initiation (deleting this will break the block functionality)
+    timer.timerStatus = STATUSES.NOT_SET;
     this.onTimerEnd();
     return;
   }
@@ -81,6 +81,7 @@ var reduceTimer = function() {
 var onTimerEnd = function() {
   // filter block permissions?
   this.toggleBlockFilters(someUrls);
+  console.log('--toggle block on timer End!--');
   if (timer.pomoCount === 8) {
     this.resetTimer('POMO_COMPLETE');
   } else {
@@ -102,7 +103,7 @@ var setTimerCycle = function() {
 };
 
 var resetTimer = function(status) {
-  this.toggleBlockFilters(someUrls);
+  chrome.webRequest.onBeforeRequest.removeListener(blockRequest);
   timer.timerStatus = STATUSES[status];
   timer.countdownID = clearInterval(timer.countdownID);
   timer.remaining = timer.pomoDuration;
