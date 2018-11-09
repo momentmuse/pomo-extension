@@ -6,6 +6,7 @@ var blockRequest = function(details) {
   return { cancel: true };
 };
 
+// need to check for timer.timerStatus === 'TIMER_RUNNING'
 var updateBlockFilters = function(urls) {
   chrome.webRequest.onBeforeRequest.hasListener(blockRequest)
     ? chrome.webRequest.onBeforeRequest.removeListener(blockRequest)
