@@ -29,35 +29,30 @@ class BlockForm extends Component {
     e.preventDefault();
     const newURL = this.createURL();
 
-    this.setState(function(state) {
+    this.setState(state => {
       return {
         blockedURLs: [newURL, ...state.blockedURLs]
       };
-    });
-
-    // need to wait for state to be set before running code below
-    this.persistBlockList();
+    }, this.persistBlockList);
   };
 
   persistBlockList = () => {
-    setTimeout(() => {
-      const blockedURLs = this.state.blockedURLs.slice();
+    const blockedURLs = this.state.blockedURLs.slice();
 
-      try {
-        chrome.storage.sync.set({ blockedURLs }, () => {
-          console.log(`⬇️ Saved urls ${blockedURLs} to sync storage`);
-        });
-      } catch (e) {
-        console.log('🚫 Something went wrong while saving URLs!', e);
-      }
-      this.setState({
-        urlString: ''
+    try {
+      chrome.storage.sync.set({ blockedURLs }, () => {
+        console.log(`⬇️ Saved urls ${blockedURLs} to sync storage`);
       });
+    } catch (e) {
+      console.log('🚫 Something went wrong while saving URLs!', e);
+    }
+    this.setState({
+      urlString: ''
+    });
 
-      chrome.storage.sync.get(['blockedURLs'], data => {
-        console.log('fetching dataaaaa ⏱', data.blockedURLs);
-      });
-    }, 200);
+    chrome.storage.sync.get(['blockedURLs'], data => {
+      console.log('fetching dataaaaa ⏱', data.blockedURLs);
+    });
   };
 
   createURL = () => {
