@@ -25,9 +25,9 @@ var blockRequest = details => {
 // need to check for timer.timerStatus === 'TIMER_RUNNING'
 var toggleBlockFilters = blockedURLs => {
   var request = chrome.webRequest.onBeforeRequest;
-  var urls = blockedURLs.map(obj => {
-    return Object.values(obj)[1];
-  });
+  var urls = blockedURLs.reduce((urls, obj) => {
+    return (urls = [...urls, obj.url]);
+  }, []);
   console.log('🚀 ---TCL--- 🚀 toggleBlockFilters -> urls', urls);
   request.hasListener(blockRequest)
     ? request.removeListener(blockRequest)
