@@ -2,12 +2,8 @@
 
 // IMPORTANT: background.js page is not compatible with let, const, and other ES6 features
 
-// var openOptions = function() {
-//   window.open(chrome.runtime.getURL('options.html'));
-// };
-
-// create options dialog in pop-up
-// save this to chrome.storage with sync
+// need a connection to chrome storage
+// chrome.storage.sync.get() on every time you call toggleBlockFilters
 var someUrls = [
   '*://www.facebook.com/*',
   '*://www.reddit.com/*',
@@ -42,7 +38,7 @@ var STATUSES = {
 var timer = {
   pomoDuration: moment.duration(25, 'seconds'),
   shortBreakDuration: moment.duration(15, 'seconds'),
-  longBreakDuration: moment.duration(15, 'seconds'),
+  longBreakDuration: moment.duration(20, 'seconds'),
   countdownID: null,
   remaining: moment.duration(25, 'seconds'),
   timerStatus: STATUSES.NOT_SET,

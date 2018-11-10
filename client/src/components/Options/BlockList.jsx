@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class BlockList extends Component {
-  state = {};
-  render() {
-    return <h1>BlockList works!</h1>;
-  }
-}
+const BlockList = props => {
+  return (
+    <div>
+      <h1>BlockList works!</h1>
+      {props.blockedURLs}
+    </div>
+  );
+};
 
 export default BlockList;
