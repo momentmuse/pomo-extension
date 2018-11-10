@@ -4,7 +4,7 @@ const BlockList = props => {
   return (
     <div>
       <h1>BlockList works!</h1>
-      {props.blockedURLs}
+      <p>Items in List: {props.blockedURLs.length}</p>
     </div>
   );
 };
