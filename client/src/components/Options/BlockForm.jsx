@@ -18,21 +18,16 @@ class BlockForm extends Component {
     });
   }
 
+  handleChange = e => {
+    const url = e.target.value;
+    this.setState({
+      urlString: url
+    });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
-    const newURL = {
-      url: this.editURL(this.state.urlString),
-      id: Date.now()
-    };
-
-    // console.log(
-    //   '---blockedURLs in state before setting---',
-    //   this.state.blockedURLs
-    // );
-    // console.log('srsly why what am i trying to set state to', [
-    //   newURL,
-    //   ...this.state.blockedURLs
-    // ]);
+    const newURL = this.createURL();
 
     this.setState(function(state) {
       return {
@@ -41,11 +36,11 @@ class BlockForm extends Component {
     });
 
     // need to wait for state to be set before running code below
+    this.persistBlockList();
+  };
+
+  persistBlockList = () => {
     setTimeout(() => {
-      console.log(
-        '---blockedURLs after setting state---',
-        this.state.blockedURLs
-      );
       const blockedURLs = this.state.blockedURLs.slice();
 
       try {
@@ -65,16 +60,15 @@ class BlockForm extends Component {
     }, 200);
   };
 
-  handleChange = e => {
-    const url = e.target.value;
-    this.setState({
-      urlString: url
-    });
+  createURL = () => {
+    return {
+      url: this.editString(this.state.urlString),
+      id: Date.now()
+    };
   };
 
-  editURL = url => {
+  editString = url => {
     // this will only work with full URLs, copy pasted from browser
-    // temporary solution for now, see background.js.someUrls for correct URL format
     let frontTrim = url.substring(url.indexOf(':'));
     const index = frontTrim.indexOf('/', 3) + 1;
     return '*' + frontTrim.substring(0, index) + '*';
