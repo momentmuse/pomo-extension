@@ -3,7 +3,7 @@ import React from 'react';
 const TimerConfig = props => {
   const {
     toggleOptions,
-    blockCurrentTab,
+    // blockCurrentTab,
     display,
     timerStatus,
     pomoCount
@@ -13,11 +13,13 @@ const TimerConfig = props => {
     (timerStatus === 'TIMER_RUNNING' || timerStatus === 'TIMER_PAUSED') &&
     pomoCount % 2 === 0;
 
+  // TODO: Integrate Block Current tab
+  // {display === 'options' && (
+  //   <button onClick={blockCurrentTab}>Block!</button>
+  // )}
+
   return (
     <React.Fragment>
-      {display === 'options' && (
-        <button onClick={blockCurrentTab}>Block!</button>
-      )}
       <button onClick={toggleOptions} disabled={studyMode ? true : false}>
         {display === 'timer' ? 'Options' : 'Timer'}
       </button>

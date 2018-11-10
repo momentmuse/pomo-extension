@@ -42,10 +42,11 @@ class App extends Component {
         });
   };
 
-  blockCurrentTab = () => {
-    console.log('👾 Blocking the current tab! Wooo!');
-    // this.state.background.blockCurrentTab();
-  };
+  // TODO: Integrate Block Current tab
+  // blockCurrentTab = () => {
+  // console.log('👾 Blocking the current tab! Wooo!');
+  // this.state.background.blockCurrentTab();
+  // };
 
   render() {
     const { timer } = this.state.background;

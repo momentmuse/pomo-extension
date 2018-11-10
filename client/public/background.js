@@ -33,6 +33,7 @@ var updateBlockedURLs = async () => {
 
 updateBlockedURLs();
 
+// TODO: Integrate Block Current tab
 // var blockCurrentTab = () => {
 //   console.log('lalalala 🎼');
 // chrome.tabs.query ... may have to put into a content script?
