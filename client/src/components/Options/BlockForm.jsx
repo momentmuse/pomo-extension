@@ -10,10 +10,8 @@ class BlockForm extends Component {
 
   componentDidMount() {
     chrome.storage.sync.get(['blockedURLs'], data => {
-      const savedURLs = data.blockedURLs;
-      console.log('🎉 savedURLs!!! 🎉', savedURLs);
       this.setState({
-        blockedURLs: savedURLs || []
+        blockedURLs: data.blockedURLs || []
       });
     });
   }
@@ -38,7 +36,6 @@ class BlockForm extends Component {
 
   persistBlockList = () => {
     const blockedURLs = this.state.blockedURLs.slice();
-
     try {
       chrome.storage.sync.set({ blockedURLs }, () => {
         console.log(`⬇️ Saved urls ${blockedURLs} to sync storage`);
@@ -48,10 +45,6 @@ class BlockForm extends Component {
     }
     this.setState({
       urlString: ''
-    });
-
-    chrome.storage.sync.get(['blockedURLs'], data => {
-      console.log('fetching dataaaaa ⏱', data.blockedURLs);
     });
   };
 
@@ -70,7 +63,7 @@ class BlockForm extends Component {
   };
 
   render() {
-    const { blockedURLs } = this.state;
+    const { urlString, blockedURLs } = this.state;
 
     return (
       <div className="url-form">
@@ -78,7 +71,7 @@ class BlockForm extends Component {
           <input
             type="text"
             onChange={this.handleChange}
-            value={this.state.urlString}
+            value={urlString}
             placeholder="no more distractions!"
           />
           <button type="submit">BOOM!</button>
