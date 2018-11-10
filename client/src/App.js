@@ -10,16 +10,11 @@ import BlockForm from './components/Options/BlockForm';
 class App extends Component {
   state = {
     display: 'timer',
-    // popups (index.html, the html that this class App is appended to) do not persist, they are destroyed and reconstructed with each open/close
-    // I need to store the state on a background script in the browser (runs while Chrome is running), which is like a temporary redux store, or single source of truth
-    // the background page also contains much of the logic and handlers of the timer
     background: chrome.extension.getBackgroundPage()
-    // background is equal to a window object
   };
 
   componentDidMount() {
-    // even though the timer object in background.js is being mutated, the app is not rerendering
-    // this is a hacky way of solving the non re-rendering problem
+    // try to refactor to allow async updating like BlockForm
     setInterval(
       () =>
         this.setState({
@@ -27,9 +22,6 @@ class App extends Component {
         }),
       500
     );
-    // this.setState({
-    //   background: chrome.extension.getBackgroundPage()
-    // });
   }
 
   toggleTimer = () => {

@@ -1,31 +1,37 @@
 /*global chrome*/
 
-// IMPORTANT: background.js page is not compatible with let, const, and other ES6 features
+// IMPORTANT: background.js page is not compatible with let & const
 
-// need a connection to chrome storage
-// chrome.storage.sync.get() on every time you call toggleBlockFilters
-var someUrls = [
-  '*://www.facebook.com/*',
-  '*://www.reddit.com/*',
-  '*://www.youtube.com/*',
-  '*://www.instagram.com/*'
-];
+var blockedURLs;
 
-var blockCurrentTab = function() {
+var getBlockedURLs = () => {
+  chrome.storage.sync.get(['blockedURLs'], function(data) {
+    blockedURLs = data.blockedURLs || [];
+    console.log('🚀 ---TCL--- 🚀 getBlockedURLs -> blockedURLs', blockedURLs);
+  });
+};
+
+getBlockedURLs();
+
+var blockCurrentTab = () => {
   console.log('lalalala 🎼');
   // chrome.tabs.query ... may have to put into a content script?
 };
 
-var blockRequest = function(details) {
+var blockRequest = details => {
   return { cancel: true };
 };
 
 // need to check for timer.timerStatus === 'TIMER_RUNNING'
-var toggleBlockFilters = function(urls) {
+var toggleBlockFilters = blockedURLs => {
   var request = chrome.webRequest.onBeforeRequest;
+  var urls = blockedURLs.map(obj => {
+    return Object.values(obj)[1];
+  });
+  console.log('🚀 ---TCL--- 🚀 toggleBlockFilters -> urls', urls);
   request.hasListener(blockRequest)
     ? request.removeListener(blockRequest)
-    : request.addListener(blockRequest, { urls: urls }, ['blocking']);
+    : request.addListener(blockRequest, { urls }, ['blocking']);
 };
 
 var STATUSES = {
@@ -45,9 +51,9 @@ var timer = {
   pomoCount: 0
 };
 
-var toggleTimer = function() {
+var toggleTimer = () => {
   if (timer.timerStatus === 'NOT_SET' && timer.pomoCount === 0) {
-    toggleBlockFilters(someUrls);
+    toggleBlockFilters(blockedURLs);
   }
 
   if (timer.timerStatus !== 'TIMER_RUNNING') {
@@ -59,7 +65,7 @@ var toggleTimer = function() {
   }
 };
 
-var reduceTimer = function() {
+var reduceTimer = () => {
   var timerFinished =
     timer.remaining.get('minutes') === 0 &&
     timer.remaining.get('seconds') === 0;
@@ -80,9 +86,9 @@ var reduceTimer = function() {
   timer.remaining = timerDisplay;
 };
 
-var onTimerEnd = function() {
+var onTimerEnd = () => {
   // filter block permissions?
-  toggleBlockFilters(someUrls);
+  toggleBlockFilters(blockedURLs);
 
   if (timer.pomoCount === 8) {
     resetTimer('POMO_COMPLETE');
@@ -92,7 +98,7 @@ var onTimerEnd = function() {
   }
 };
 
-var setTimerCycle = function() {
+var setTimerCycle = () => {
   if (timer.pomoCount % 2 === 0) {
     alert('Back to work! 📚');
     timer.remaining = timer.pomoDuration;
@@ -104,7 +110,7 @@ var setTimerCycle = function() {
   }
 };
 
-var resetTimer = function(status) {
+var resetTimer = status => {
   chrome.webRequest.onBeforeRequest.removeListener(blockRequest);
   timer.timerStatus = STATUSES[status];
   timer.countdownID = clearInterval(timer.countdownID);
