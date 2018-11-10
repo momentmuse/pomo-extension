@@ -4,6 +4,7 @@ import BlockList from './BlockList';
 
 class BlockForm extends Component {
   state = {
+    title: '',
     urlString: '',
     blockedURLs: []
   };
@@ -17,9 +18,15 @@ class BlockForm extends Component {
   }
 
   handleChange = e => {
-    const url = e.target.value;
+    const { name, type, value } = e.target;
+    const val = type === 'number' ? parseFloat(value) : value;
+    this.setState({ [name]: val });
+  };
+
+  handleChange = e => {
+    const { name, value } = e.target;
     this.setState({
-      urlString: url
+      [name]: value
     });
   };
 
@@ -44,13 +51,16 @@ class BlockForm extends Component {
       console.log('🚫 Something went wrong while saving URLs!', e);
     }
     this.setState({
+      title: '',
       urlString: ''
     });
   };
 
   createURL = () => {
+    const { title, urlString } = this.state;
     return {
-      url: this.editString(this.state.urlString),
+      title,
+      url: this.editString(urlString),
       id: Date.now()
     };
   };
@@ -63,7 +73,7 @@ class BlockForm extends Component {
   };
 
   render() {
-    const { urlString, blockedURLs } = this.state;
+    const { title, urlString, blockedURLs } = this.state;
 
     return (
       <div className="url-form">
@@ -71,8 +81,16 @@ class BlockForm extends Component {
           <input
             type="text"
             onChange={this.handleChange}
+            name="title"
+            value={title}
+            placeholder="site name"
+          />
+          <input
+            type="text"
+            onChange={this.handleChange}
+            name="urlString"
             value={urlString}
-            placeholder="no more distractions!"
+            placeholder="url goes here!"
           />
           <button type="submit">BOOM!</button>
         </form>
