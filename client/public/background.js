@@ -4,14 +4,17 @@
 
 var blockedURLs;
 
-var getBlockedURLs = () => {
-  chrome.storage.sync.get(['blockedURLs'], function(data) {
+var updateBlockedURLs = async () => {
+  await chrome.storage.sync.get(['blockedURLs'], data => {
     blockedURLs = data.blockedURLs || [];
-    console.log('🚀 ---TCL--- 🚀 getBlockedURLs -> blockedURLs', blockedURLs);
+    console.log(
+      '🚀 ---TCL--- 🚀 updateBlockedURLs -> blockedURLs',
+      blockedURLs
+    );
   });
 };
 
-getBlockedURLs();
+updateBlockedURLs();
 
 var blockCurrentTab = () => {
   console.log('lalalala 🎼');
@@ -53,6 +56,7 @@ var timer = {
 
 var toggleTimer = () => {
   if (timer.timerStatus === 'NOT_SET' && timer.pomoCount === 0) {
+    updateBlockedURLs();
     toggleBlockFilters(blockedURLs);
   }
 
@@ -88,6 +92,7 @@ var reduceTimer = () => {
 
 var onTimerEnd = () => {
   // filter block permissions?
+  updateBlockedURLs();
   toggleBlockFilters(blockedURLs);
 
   if (timer.pomoCount === 8) {
