@@ -2,41 +2,6 @@
 
 // IMPORTANT: background.js page is not compatible with let & const
 
-var blockedURLs;
-
-var updateBlockedURLs = async () => {
-  await chrome.storage.sync.get(['blockedURLs'], data => {
-    blockedURLs = data.blockedURLs || [];
-    console.log(
-      '🚀 ---TCL--- 🚀 updateBlockedURLs -> blockedURLs',
-      blockedURLs
-    );
-  });
-};
-
-updateBlockedURLs();
-
-var blockCurrentTab = () => {
-  console.log('lalalala 🎼');
-  // chrome.tabs.query ... may have to put into a content script?
-};
-
-var blockRequest = details => {
-  return { cancel: true };
-};
-
-// need to check for timer.timerStatus === 'TIMER_RUNNING'
-var toggleBlockFilters = blockedURLs => {
-  var request = chrome.webRequest.onBeforeRequest;
-  var urls = blockedURLs.reduce((urls, obj) => {
-    return (urls = [...urls, obj.url]);
-  }, []);
-  console.log('🚀 ---TCL--- 🚀 toggleBlockFilters -> urls', urls);
-  request.hasListener(blockRequest)
-    ? request.removeListener(blockRequest)
-    : request.addListener(blockRequest, { urls }, ['blocking']);
-};
-
 var STATUSES = {
   NOT_SET: 'NOT_SET',
   TIMER_RUNNING: 'TIMER_RUNNING',
@@ -54,11 +19,49 @@ var timer = {
   pomoCount: 0
 };
 
+var blockedURLs;
+
+var updateBlockedURLs = async () => {
+  await chrome.storage.sync.get(['blockedURLs'], data => {
+    blockedURLs = data.blockedURLs || [];
+    console.log(
+      '🚀 ---TCL--- 🚀 updateBlockedURLs -> blockedURLs',
+      blockedURLs
+    );
+  });
+};
+
+updateBlockedURLs();
+
+// var blockCurrentTab = () => {
+//   console.log('lalalala 🎼');
+// chrome.tabs.query ... may have to put into a content script?
+// };
+
+var blockRequest = details => {
+  return { cancel: true };
+};
+
+var studyMode =
+  (timer.timerStatus === 'TIMER_RUNNING' ||
+    timer.timerStatus === 'TIMER_PAUSED') &&
+  timer.pomoCount % 2 === 0;
+
+var toggleBlockFilters = blockedURLs => {
+  var request = chrome.webRequest.onBeforeRequest;
+  var urls = blockedURLs.reduce((urls, obj) => {
+    return (urls = [...urls, obj.url]);
+  }, []);
+  console.log('🚀 ---TCL--- 🚀 toggleBlockFilters -> urls', urls);
+
+  timer.pomoCount % 2 === 0
+    ? request.addListener(blockRequest, { urls }, ['blocking'])
+    : request.removeListener(blockRequest);
+};
+
 var toggleTimer = () => {
-  if (timer.timerStatus === 'NOT_SET' && timer.pomoCount === 0) {
-    updateBlockedURLs();
-    toggleBlockFilters(blockedURLs);
-  }
+  updateBlockedURLs();
+  toggleBlockFilters(blockedURLs);
 
   if (timer.timerStatus !== 'TIMER_RUNNING') {
     timer.timerStatus = STATUSES.TIMER_RUNNING;
@@ -76,11 +79,12 @@ var reduceTimer = () => {
 
   if (timerFinished) {
     timer.countdownID = clearInterval(timer.countdownID);
-    // pomoCount must be increased before status is set
     ++timer.pomoCount;
     // this line causes the next cycle to auto-run
     // delete for manual initiation (deleting this will break the block functionality)
     timer.timerStatus = STATUSES.NOT_SET;
+    updateBlockedURLs();
+    toggleBlockFilters(blockedURLs);
     onTimerEnd();
     return;
   }
@@ -91,10 +95,6 @@ var reduceTimer = () => {
 };
 
 var onTimerEnd = () => {
-  // filter block permissions?
-  updateBlockedURLs();
-  toggleBlockFilters(blockedURLs);
-
   if (timer.pomoCount === 8) {
     resetTimer('POMO_COMPLETE');
   } else {
