@@ -24,10 +24,6 @@ var blockedURLs;
 var updateBlockedURLs = async () => {
   await chrome.storage.sync.get(['blockedURLs'], data => {
     blockedURLs = data.blockedURLs || [];
-    console.log(
-      '🚀 ---TCL--- 🚀 updateBlockedURLs -> blockedURLs',
-      blockedURLs
-    );
   });
 };
 
@@ -42,11 +38,6 @@ updateBlockedURLs();
 var blockRequest = details => {
   return { cancel: true };
 };
-
-// var studyMode =
-//   (timer.timerStatus === 'TIMER_RUNNING' ||
-//     timer.timerStatus === 'TIMER_PAUSED') &&
-//   timer.pomoCount % 2 === 0;
 
 var toggleBlockFilters = blockedURLs => {
   var request = chrome.webRequest.onBeforeRequest;
