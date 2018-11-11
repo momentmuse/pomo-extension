@@ -6,7 +6,7 @@ const BlockUrl = props => {
       {props.obj.title}
       <button
         onClick={() => {
-          props.handleClick(props.obj.id);
+          props.handleRemove(props.obj.id);
         }}
       >
         X

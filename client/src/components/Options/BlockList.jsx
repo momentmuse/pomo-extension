@@ -9,7 +9,11 @@ class BlockList extends Component {
   renderBlocked = blockedURLs => {
     return blockedURLs.map(obj => (
       <li>
-        <BlockUrl obj={obj} handleClick={this.handleClick} />
+        <BlockUrl
+          obj={obj}
+          handleClick={this.handleClick}
+          handleRemove={this.props.handleRemove}
+        />
       </li>
     ));
   };

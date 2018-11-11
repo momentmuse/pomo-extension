@@ -35,6 +35,10 @@ class BlockForm extends Component {
     }, this.persistBlockList);
   };
 
+  handleRemove = id => {
+    console.log('🚮 id of website to be removed!', id);
+  };
+
   persistBlockList = () => {
     const blockedURLs = this.state.blockedURLs.slice();
     try {
@@ -90,7 +94,7 @@ class BlockForm extends Component {
             BOOM!
           </button>
         </form>
-        <BlockList blockedURLs={blockedURLs} />
+        <BlockList blockedURLs={blockedURLs} handleRemove={this.handleRemove} />
       </div>
     );
   }
