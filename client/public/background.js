@@ -43,10 +43,10 @@ var blockRequest = details => {
   return { cancel: true };
 };
 
-var studyMode =
-  (timer.timerStatus === 'TIMER_RUNNING' ||
-    timer.timerStatus === 'TIMER_PAUSED') &&
-  timer.pomoCount % 2 === 0;
+// var studyMode =
+//   (timer.timerStatus === 'TIMER_RUNNING' ||
+//     timer.timerStatus === 'TIMER_PAUSED') &&
+//   timer.pomoCount % 2 === 0;
 
 var toggleBlockFilters = blockedURLs => {
   var request = chrome.webRequest.onBeforeRequest;
@@ -84,8 +84,6 @@ var reduceTimer = () => {
     // this line causes the next cycle to auto-run
     // delete for manual initiation (deleting this will break the block functionality)
     timer.timerStatus = STATUSES.NOT_SET;
-    updateBlockedURLs();
-    toggleBlockFilters(blockedURLs);
     onTimerEnd();
     return;
   }
@@ -96,6 +94,9 @@ var reduceTimer = () => {
 };
 
 var onTimerEnd = () => {
+  updateBlockedURLs();
+  toggleBlockFilters(blockedURLs);
+
   if (timer.pomoCount === 8) {
     resetTimer('POMO_COMPLETE');
   } else {

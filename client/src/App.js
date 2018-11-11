@@ -14,14 +14,9 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // try to refactor to allow async updating like BlockForm
-    setInterval(
-      () =>
-        this.setState({
-          background: chrome.extension.getBackgroundPage()
-        }),
-      500
-    );
+    setInterval(() => {
+      this.setState(this.state);
+    }, 500);
   }
 
   toggleTimer = () => {
