@@ -86,7 +86,9 @@ class BlockForm extends Component {
             value={urlString}
             placeholder="url goes here!"
           />
-          <button type="submit">BOOM!</button>
+          <button type="submit" disabled={!urlString || !title}>
+            BOOM!
+          </button>
         </form>
         <BlockList blockedURLs={blockedURLs} />
       </div>

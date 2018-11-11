@@ -3,8 +3,14 @@ import React from 'react';
 const BlockUrl = props => {
   return (
     <li>
-      {props.title}
-      <button>X</button>
+      {props.obj.title}
+      <button
+        onClick={() => {
+          props.handleClick(props.obj.id);
+        }}
+      >
+        X
+      </button>
     </li>
   );
 };
