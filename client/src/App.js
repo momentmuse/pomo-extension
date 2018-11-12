@@ -6,7 +6,6 @@ import TimerDisplay from './components/Timer/TimerDisplay';
 import TimerButton from './components/Timer/TimerButton';
 import TimerConfig from './components/Timer/TimerConfig';
 import BlockForm from './components/Options/BlockForm';
-import { Button } from 'semantic-ui-react';
 
 class App extends Component {
   state = {

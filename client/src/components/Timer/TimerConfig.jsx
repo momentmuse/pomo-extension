@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, Icon } from 'semantic-ui-react';
 
 const TimerConfig = props => {
   const {
@@ -20,15 +21,27 @@ const TimerConfig = props => {
   // )}
 
   return (
-    <React.Fragment>
+    <div className="config">
       {display === 'timer' ? (
-        <button onClick={openOptions} disabled={studyMode ? true : false}>
-          Options
-        </button>
+        <Button
+          animated="fade"
+          onClick={openOptions}
+          disabled={studyMode ? true : false}
+        >
+          <Button.Content visible>Options</Button.Content>
+          <Button.Content hidden>
+            <Icon name="options" />
+          </Button.Content>
+        </Button>
       ) : (
-        <button onClick={openTimer}>Timer</button>
+        <Button animated="fade" onClick={openTimer}>
+          <Button.Content visible>Timer</Button.Content>
+          <Button.Content hidden>
+            <Icon name="stopwatch" />
+          </Button.Content>
+        </Button>
       )}
-    </React.Fragment>
+    </div>
   );
 };
 
