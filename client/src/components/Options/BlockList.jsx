@@ -2,16 +2,12 @@ import React, { Component } from 'react';
 import BlockUrl from './BlockUrl';
 
 class BlockList extends Component {
-  handleClick = id => {
-    console.log('id of website to be removed!', id);
-  };
-
   renderBlocked = blockedURLs => {
     return blockedURLs.map(obj => (
       <li>
         <BlockUrl
           obj={obj}
-          handleClick={this.handleClick}
+          // handleClick={this.handleClick}
           handleRemove={this.props.handleRemove}
         />
       </li>

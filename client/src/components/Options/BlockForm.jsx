@@ -37,6 +37,14 @@ class BlockForm extends Component {
 
   handleRemove = id => {
     console.log('🚮 id of website to be removed!', id);
+
+    // need to save array of full URL objects in state, not just array of strings
+
+    // this.setState(state => {
+    //   return {
+    //     blockedURLs: [newURL, ...state.blockedURLs]
+    //   };
+    // }, this.persistBlockList);
   };
 
   persistBlockList = () => {

@@ -2,6 +2,7 @@
 
 // IMPORTANT: background.js page is not compatible with let & const
 
+// Nice job using constants!
 var STATUSES = {
   NOT_SET: 'NOT_SET',
   TIMER_RUNNING: 'TIMER_RUNNING',
@@ -19,6 +20,12 @@ var timer = {
   pomoCount: 0
 };
 
+// TODO: Integrate Block Current tab
+// var blockCurrentTab = () => {
+//   console.log('lalalala 🎼');
+// chrome.tabs.query ... may have to put into a content script?
+// };
+
 var blockedURLs;
 
 var updateBlockedURLs = async () => {
@@ -29,24 +36,17 @@ var updateBlockedURLs = async () => {
 
 updateBlockedURLs();
 
-// TODO: Integrate Block Current tab
-// var blockCurrentTab = () => {
-//   console.log('lalalala 🎼');
-// chrome.tabs.query ... may have to put into a content script?
-// };
-
 var blockRequest = details => {
   return { cancel: true };
 };
 
 var toggleBlockFilters = blockedURLs => {
   var request = chrome.webRequest.onBeforeRequest;
-  var urls = blockedURLs.reduce((urls, obj) => {
-    return (urls = [...urls, obj.url]);
-  }, []);
-  console.log('🚀 ---TCL--- 🚀 toggleBlockFilters -> urls', urls);
+  var urls = blockedURLs.map(urlObj => urlObj.url);
+  var studyMode = timer.pomoCount % 2 === 0;
 
-  timer.pomoCount % 2 === 0
+  // This is hard to understand
+  studyMode
     ? request.addListener(blockRequest, { urls }, ['blocking'])
     : request.removeListener(blockRequest);
 };
@@ -65,23 +65,28 @@ var toggleTimer = () => {
 };
 
 var reduceTimer = () => {
+  checkIfFinished();
+
+  var timerDisplay = moment.duration(timer.remaining);
+  timerDisplay.subtract(1, 'second');
+  timer.remaining = timerDisplay;
+};
+
+var checkIfFinished = () => {
   var timerFinished =
     timer.remaining.get('minutes') === 0 &&
     timer.remaining.get('seconds') === 0;
 
   if (timerFinished) {
     timer.countdownID = clearInterval(timer.countdownID);
+    // This syntax is a little obscure
     ++timer.pomoCount;
     // this line causes the next cycle to auto-run
     // delete for manual initiation (deleting this will break the block functionality)
     timer.timerStatus = STATUSES.NOT_SET;
     onTimerEnd();
-    return;
+    // return;
   }
-
-  var timerDisplay = moment.duration(timer.remaining);
-  timerDisplay.subtract(1, 'second');
-  timer.remaining = timerDisplay;
 };
 
 var onTimerEnd = () => {
@@ -115,3 +120,16 @@ var resetTimer = status => {
   timer.remaining = timer.pomoDuration;
   timer.pomoCount = 0;
 };
+
+// Generally pretty good!
+// If I had time to refactor it, I would try to create
+// a 'thing' (object / module / class) that handles
+// blocking, timer.
+// Right now it was difficult to understand because generally
+// the functions seem to do more than what I expected them to do.
+// And I had to reference a few other functions to understand
+// what was happening.
+// It might be unfamiliarity with the code, but encapsulating
+// that behaviour into a well behaved thing with meaningful
+// methods might be easier to understand on first glance.
+// It would also make your code more flexible (for example if you introduce another scheduler)
