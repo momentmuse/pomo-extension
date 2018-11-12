@@ -53,14 +53,16 @@ class App extends Component {
     const { timer } = this.state.background;
     return (
       <div className="App">
-        <TimerConfig
-          openOptions={this.openOptions}
-          openTimer={this.openTimer}
-          blockCurrentTab={this.blockCurrentTab}
-          display={this.state.display}
-          timerStatus={timer.timerStatus}
-          pomoCount={timer.pomoCount}
-        />
+        <div className="config-panel">
+          <TimerConfig
+            openOptions={this.openOptions}
+            openTimer={this.openTimer}
+            blockCurrentTab={this.blockCurrentTab}
+            display={this.state.display}
+            timerStatus={timer.timerStatus}
+            pomoCount={timer.pomoCount}
+          />
+        </div>
 
         {this.state.display === 'timer' ? (
           <div className="app-timer">

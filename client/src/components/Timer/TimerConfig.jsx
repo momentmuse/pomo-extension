@@ -24,6 +24,7 @@ const TimerConfig = props => {
     <div className="config">
       {display === 'timer' ? (
         <Button
+          floated="right"
           animated="fade"
           onClick={openOptions}
           disabled={studyMode ? true : false}
@@ -34,7 +35,7 @@ const TimerConfig = props => {
           </Button.Content>
         </Button>
       ) : (
-        <Button animated="fade" onClick={openTimer}>
+        <Button floated="right" animated="fade" onClick={openTimer}>
           <Button.Content visible>Timer</Button.Content>
           <Button.Content hidden>
             <Icon name="stopwatch" />
