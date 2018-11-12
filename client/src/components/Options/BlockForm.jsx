@@ -1,7 +1,7 @@
 /*global chrome*/
 import React, { Component } from 'react';
 import BlockList from './BlockList';
-import { Button } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 
 class BlockForm extends Component {
   state = {
@@ -84,7 +84,7 @@ class BlockForm extends Component {
 
     return (
       <div className="url-form">
-        <form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
           <input
             type="text"
             onChange={this.handleChange}
@@ -102,7 +102,7 @@ class BlockForm extends Component {
           <Button type="submit" disabled={!urlString || !title}>
             Block it!
           </Button>
-        </form>
+        </Form>
         <BlockList blockedURLs={blockedURLs} handleRemove={this.handleRemove} />
       </div>
     );

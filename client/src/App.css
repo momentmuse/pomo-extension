@@ -1,13 +1,20 @@
 body {
-  background-color: 	#fffff0;
-  height: 350px;
+  background-color: 	#fafafafa;
+  height: 360px;
   width: 200px;
-  padding: 15px;
   display: flex;
   justify-content: center;
-  align-content: space-around;
+  align-content: center;
 }
 
 .App {
+  background-color: #EADEDB;
+  border-radius: 20px;
+  width: 85vw;
+  height: 90vh;
+  position: relative;
+  left: auto;
+  top: 15px;
   text-align: center;
 }
+

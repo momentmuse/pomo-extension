@@ -22,26 +22,28 @@ const TimerConfig = props => {
 
   return (
     <div className="config">
-      {display === 'timer' ? (
-        <Button
-          floated="right"
-          animated="fade"
-          onClick={openOptions}
-          disabled={studyMode ? true : false}
-        >
-          <Button.Content visible>Options</Button.Content>
-          <Button.Content hidden>
-            <Icon name="options" />
-          </Button.Content>
-        </Button>
-      ) : (
-        <Button floated="right" animated="fade" onClick={openTimer}>
-          <Button.Content visible>Timer</Button.Content>
-          <Button.Content hidden>
-            <Icon name="stopwatch" />
-          </Button.Content>
-        </Button>
-      )}
+      <Button
+        floated="right"
+        animated="fade"
+        onClick={openOptions}
+        disabled={studyMode || display === 'options' ? true : false}
+      >
+        <Button.Content visible>Options</Button.Content>
+        <Button.Content hidden>
+          <Icon name="options" />
+        </Button.Content>
+      </Button>
+      <Button
+        floated="left"
+        animated="fade"
+        onClick={openTimer}
+        disabled={display === 'timer' ? true : false}
+      >
+        <Button.Content visible>Timer</Button.Content>
+        <Button.Content hidden>
+          <Icon name="stopwatch" />
+        </Button.Content>
+      </Button>
     </div>
   );
 };

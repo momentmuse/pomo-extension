@@ -4,9 +4,7 @@ import BlockUrl from './BlockUrl';
 class BlockList extends Component {
   renderBlocked = blockedURLs => {
     return blockedURLs.map(obj => (
-      <li>
-        <BlockUrl obj={obj} handleRemove={this.props.handleRemove} />
-      </li>
+      <BlockUrl obj={obj} handleRemove={this.props.handleRemove} />
     ));
   };
 
@@ -15,7 +13,6 @@ class BlockList extends Component {
     return (
       <div>
         <h3>Blocked Websites</h3>
-        <p>Items in List: {blockedURLs.length}</p>
         <ul>{this.renderBlocked(blockedURLs)}</ul>
       </div>
     );
