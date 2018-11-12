@@ -23,16 +23,7 @@ const TimerConfig = props => {
   return (
     <React.Fragment>
       <Button
-        animated="fade"
-        onClick={openTimer}
-        disabled={display === 'timer' ? true : false}
-      >
-        <Button.Content visible>Timer</Button.Content>
-        <Button.Content hidden>
-          <Icon name="stopwatch" />
-        </Button.Content>
-      </Button>
-      <Button
+        floated="right"
         animated="fade"
         onClick={openOptions}
         disabled={studyMode || display === 'options' ? true : false}
@@ -40,6 +31,17 @@ const TimerConfig = props => {
         <Button.Content visible>Options</Button.Content>
         <Button.Content hidden>
           <Icon name="options" />
+        </Button.Content>
+      </Button>
+      <Button
+        floated="right"
+        animated="fade"
+        onClick={openTimer}
+        disabled={display === 'timer' ? true : false}
+      >
+        <Button.Content visible>Timer</Button.Content>
+        <Button.Content hidden>
+          <Icon name="stopwatch" />
         </Button.Content>
       </Button>
     </React.Fragment>

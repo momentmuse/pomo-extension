@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BlockUrl from './BlockUrl';
+import { List } from 'semantic-ui-react';
 
 class BlockList extends Component {
   renderBlocked = blockedURLs => {
@@ -12,8 +13,9 @@ class BlockList extends Component {
     const { blockedURLs } = this.props;
     return (
       <React.Fragment>
-        <h3>Blocked Websites</h3>
-        <ul>{this.renderBlocked(blockedURLs)}</ul>
+        <List divided verticalAlign="middle">
+          {this.renderBlocked(blockedURLs)}
+        </List>
       </React.Fragment>
     );
   }

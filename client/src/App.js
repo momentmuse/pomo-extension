@@ -54,7 +54,7 @@ class App extends Component {
     const { timer } = this.state.background;
     return (
       <div className="App">
-        <Container>
+        <React.Fragment>
           <TimerConfig
             openOptions={this.openOptions}
             openTimer={this.openTimer}
@@ -63,27 +63,26 @@ class App extends Component {
             timerStatus={timer.timerStatus}
             pomoCount={timer.pomoCount}
           />
-        </Container>
-        <Divider hidden />
-        <Container>
-          {this.state.display === 'timer' ? (
-            <React.Fragment>
-              🍅 Pomo Counter: {timer.pomoCount} ⏰
-              <TimerDisplay
-                timerDisplay={timer.remaining}
-                timerStatus={timer.timerStatus}
-                pomoCount={timer.pomoCount}
-              />
-              <TimerButton
-                toggleTimer={this.toggleTimer}
-                resetTimer={this.resetTimer}
-                timerStatus={timer.timerStatus}
-              />
-            </React.Fragment>
-          ) : (
-            <BlockForm background={this.state.background} />
-          )}
-        </Container>
+        </React.Fragment>
+        <Divider hidden clearing />
+
+        {this.state.display === 'timer' ? (
+          <Container>
+            🍅 Pomo Counter: {timer.pomoCount} ⏰
+            <TimerDisplay
+              timerDisplay={timer.remaining}
+              timerStatus={timer.timerStatus}
+              pomoCount={timer.pomoCount}
+            />
+            <TimerButton
+              toggleTimer={this.toggleTimer}
+              resetTimer={this.resetTimer}
+              timerStatus={timer.timerStatus}
+            />
+          </Container>
+        ) : (
+          <BlockForm background={this.state.background} />
+        )}
       </div>
     );
   }

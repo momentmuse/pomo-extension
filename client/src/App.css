@@ -10,11 +10,11 @@ body {
 .App {
   background-color: #EADEDB;
   border-radius: 20px;
-  width: 85vw;
-  height: 90vh;
+  width: 95vw;
+  height: 95vh;
   position: relative;
   left: auto;
-  top: 15px;
+  top: 5px;
   text-align: center;
 }
 
