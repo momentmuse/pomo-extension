@@ -6,8 +6,9 @@ const BlockUrl = props => {
     <List.Item>
       <List.Content floated="right">
         <Button
-          content="Delete"
+          circular
           size="tiny"
+          icon="trash alternate"
           onClick={() => {
             props.handleRemove(props.obj.id);
           }}

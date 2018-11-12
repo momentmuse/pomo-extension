@@ -1,6 +1,6 @@
 body {
-  background-color: 	#fafafafa;
-  height: 360px;
+  background-color: #EADEDB;
+  height: 380px;
   width: 200px;
   display: flex;
   justify-content: center;
@@ -8,13 +8,13 @@ body {
 }
 
 .App {
-  background-color: #EADEDB;
+  background-color: #FCFEFC;
   border-radius: 20px;
   width: 95vw;
   height: 95vh;
   position: relative;
   left: auto;
-  top: 5px;
+  top: 10px;
   text-align: center;
 }
 

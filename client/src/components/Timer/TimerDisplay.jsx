@@ -11,12 +11,11 @@ const TimerDisplay = props => {
 
   return (
     <React.Fragment>
-      <h1>{timerStatus}</h1>
-      <h2>{`${padLeft(minutes)}:${padLeft(seconds)}`}</h2>
-      {timerStatus === 'TIMER_RUNNING' && (
-        <h2>{pomoCount % 2 === 0 ? 'Study! 📖' : 'Take a break ☕️'}</h2>
+      <h1>{`${padLeft(minutes)}:${padLeft(seconds)}`}</h1>
+      {(timerStatus === 'TIMER_RUNNING' || timerStatus === 'TIMER_PAUSED') && (
+        <h3>{pomoCount % 2 === 0 ? 'Back to work! 📖' : 'Take a break ☕️'}</h3>
       )}
-      {timerStatus === 'POMO_COMPLETE' && <h1>'Well done! 🍅'</h1>}
+      {timerStatus === 'POMO_COMPLETE' && <h2>'Well done! 🍅'</h2>}
     </React.Fragment>
   );
 };

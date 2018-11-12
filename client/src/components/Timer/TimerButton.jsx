@@ -9,6 +9,7 @@ const TimerButton = props => {
         {timerStatus === 'TIMER_RUNNING' ? (
           <Button
             negative
+            size="big"
             content="Pause"
             icon="pause"
             labelPosition="left"
@@ -18,6 +19,7 @@ const TimerButton = props => {
         ) : (
           <Button
             positive
+            size="big"
             content="Start"
             icon="play"
             labelPosition="left"
@@ -27,6 +29,7 @@ const TimerButton = props => {
         )}
         <Button.Or />
         <Button
+          size="big"
           content="Cancel"
           icon="stop circle"
           labelPosition="right"

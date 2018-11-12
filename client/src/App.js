@@ -6,7 +6,8 @@ import TimerDisplay from './components/Timer/TimerDisplay';
 import TimerButton from './components/Timer/TimerButton';
 import TimerConfig from './components/Timer/TimerConfig';
 import BlockForm from './components/Options/BlockForm';
-import { Rail, Container, Divider } from 'semantic-ui-react';
+import TimerImage from './components/Timer/TimerImage';
+import { Container, Divider } from 'semantic-ui-react';
 
 class App extends Component {
   state = {
@@ -67,19 +68,26 @@ class App extends Component {
         <Divider hidden clearing />
 
         {this.state.display === 'timer' ? (
-          <Container>
-            🍅 Pomo Counter: {timer.pomoCount} ⏰
-            <TimerDisplay
-              timerDisplay={timer.remaining}
-              timerStatus={timer.timerStatus}
-              pomoCount={timer.pomoCount}
-            />
+          <React.Fragment>
+            <Container>
+              🍅 Pomo Counter: {timer.pomoCount} ⏰
+              <TimerImage
+                timerStatus={timer.timerStatus}
+                pomoCount={timer.pomoCount}
+              />
+              <TimerDisplay
+                timerDisplay={timer.remaining}
+                timerStatus={timer.timerStatus}
+                pomoCount={timer.pomoCount}
+              />
+            </Container>
+            <Divider hidden clearing />
             <TimerButton
               toggleTimer={this.toggleTimer}
               resetTimer={this.resetTimer}
               timerStatus={timer.timerStatus}
             />
-          </Container>
+          </React.Fragment>
         ) : (
           <BlockForm background={this.state.background} />
         )}
