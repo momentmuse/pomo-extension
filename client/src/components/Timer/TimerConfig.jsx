@@ -2,7 +2,8 @@ import React from 'react';
 
 const TimerConfig = props => {
   const {
-    toggleOptions,
+    openOptions,
+    openTimer,
     // blockCurrentTab,
     display,
     timerStatus,
@@ -20,9 +21,13 @@ const TimerConfig = props => {
 
   return (
     <React.Fragment>
-      <button onClick={toggleOptions} disabled={studyMode ? true : false}>
-        {display === 'timer' ? 'Options' : 'Timer'}
-      </button>
+      {display === 'timer' ? (
+        <button onClick={openOptions} disabled={studyMode ? true : false}>
+          Options
+        </button>
+      ) : (
+        <button onClick={openTimer}>Timer</button>
+      )}
     </React.Fragment>
   );
 };

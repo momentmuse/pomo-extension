@@ -5,11 +5,7 @@ class BlockList extends Component {
   renderBlocked = blockedURLs => {
     return blockedURLs.map(obj => (
       <li>
-        <BlockUrl
-          obj={obj}
-          // handleClick={this.handleClick}
-          handleRemove={this.props.handleRemove}
-        />
+        <BlockUrl obj={obj} handleRemove={this.props.handleRemove} />
       </li>
     ));
   };

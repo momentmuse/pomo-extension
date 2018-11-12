@@ -27,27 +27,26 @@ class BlockForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const newURL = this.createURL();
+    const blockedURLs = [newURL, ...this.state.blockedURLs];
 
-    this.setState(state => {
-      return {
-        blockedURLs: [newURL, ...state.blockedURLs]
-      };
-    }, this.persistBlockList);
+    this.setState({ blockedURLs });
+    this.persistBlockList(blockedURLs);
+    // update blockedURLs on background
+    this.props.background.getBlockedURLsFromStorage();
   };
 
   handleRemove = id => {
-    const blockedURLs = this.state.blockedURLs.slice();
-    const filteredURLs = blockedURLs.filter(urlObj => urlObj.id !== id);
+    const blockedURLs = this.state.blockedURLs.filter(
+      urlObj => urlObj.id !== id
+    );
 
-    this.setState(() => {
-      return {
-        blockedURLs: [...filteredURLs]
-      };
-    }, this.persistBlockList);
+    this.setState({ blockedURLs });
+    this.persistBlockList(blockedURLs);
+    // update blockedURLs on background
+    this.props.background.getBlockedURLsFromStorage();
   };
 
-  persistBlockList = () => {
-    const blockedURLs = this.state.blockedURLs.slice();
+  persistBlockList = blockedURLs => {
     try {
       chrome.storage.sync.set({ blockedURLs }, () => {
         console.log(`⬇️ Saved urls ${blockedURLs} to sync storage`);
@@ -64,9 +63,9 @@ class BlockForm extends Component {
   createURL = () => {
     const { title, urlString } = this.state;
     return {
+      id: Date.now(),
       title,
-      url: this.editString(urlString),
-      id: Date.now()
+      url: this.editString(urlString)
     };
   };
 

@@ -31,14 +31,16 @@ class App extends Component {
     this.state.background.resetTimer('NOT_SET');
   };
 
-  toggleOptions = () => {
-    this.state.display === 'timer'
-      ? this.setState({
-          display: 'options'
-        })
-      : this.setState({
-          display: 'timer'
-        });
+  openOptions = () => {
+    this.setState({
+      display: 'options'
+    });
+  };
+
+  openTimer = () => {
+    this.setState({
+      display: 'timer'
+    });
   };
 
   // TODO: Integrate Block Current tab
@@ -52,7 +54,8 @@ class App extends Component {
     return (
       <div className="App">
         <TimerConfig
-          toggleOptions={this.toggleOptions}
+          openOptions={this.openOptions}
+          openTimer={this.openTimer}
           blockCurrentTab={this.blockCurrentTab}
           display={this.state.display}
           timerStatus={timer.timerStatus}
@@ -75,7 +78,7 @@ class App extends Component {
           </div>
         ) : (
           <div className="app-options">
-            <BlockForm />
+            <BlockForm background={this.state.background} />
           </div>
         )}
       </div>

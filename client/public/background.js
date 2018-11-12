@@ -2,7 +2,6 @@
 
 // IMPORTANT: background.js page is not compatible with let & const
 
-// Nice job using constants!
 var STATUSES = {
   NOT_SET: 'NOT_SET',
   TIMER_RUNNING: 'TIMER_RUNNING',
@@ -28,26 +27,25 @@ var timer = {
 
 var blockedURLs;
 
-var updateBlockedURLs = async () => {
+var getBlockedURLsFromStorage = async () => {
   await chrome.storage.sync.get(['blockedURLs'], data => {
     blockedURLs = data.blockedURLs || [];
+    return;
   });
 };
 
-updateBlockedURLs();
+getBlockedURLsFromStorage();
 
 var blockRequest = details => {
   return { cancel: true };
 };
 
-// on removal of url (BlockForm.handleRemove(id)), the list is persisted in sync storage, but the webRequest listener is not removed. Must remove it!
-
-var setBlockFilters = blockedURLs => {
+var setBlockFilters = () => {
   var request = chrome.webRequest.onBeforeRequest;
   var studyMode = timer.pomoCount % 2 === 0;
   var urls = blockedURLs.map(urlObj => urlObj.url);
 
-  // This is hard to understand
+  // this creates one blockRequest for an array of urls (addListener) or removes the previously set blockRequest (removeListener)
   studyMode
     ? request.addListener(blockRequest, { urls }, ['blocking'])
     : request.removeListener(blockRequest);
@@ -55,8 +53,9 @@ var setBlockFilters = blockedURLs => {
 
 var toggleTimer = () => {
   // this sets filters on clicking start for the first time
-  updateBlockedURLs();
-  setBlockFilters(blockedURLs);
+  if (timer.pomoCount === 0 && timer.timerStatus === 'NOT_SET') {
+    setBlockFilters(blockedURLs);
+  }
 
   if (timer.timerStatus !== 'TIMER_RUNNING') {
     timer.timerStatus = STATUSES.TIMER_RUNNING;
@@ -93,7 +92,6 @@ var checkIfFinished = () => {
 };
 
 var onTimerEnd = () => {
-  updateBlockedURLs();
   setBlockFilters(blockedURLs);
 
   if (timer.pomoCount === 8) {
