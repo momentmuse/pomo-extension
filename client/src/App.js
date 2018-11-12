@@ -6,6 +6,7 @@ import TimerDisplay from './components/Timer/TimerDisplay';
 import TimerButton from './components/Timer/TimerButton';
 import TimerConfig from './components/Timer/TimerConfig';
 import BlockForm from './components/Options/BlockForm';
+import { Rail, Container, Divider } from 'semantic-ui-react';
 
 class App extends Component {
   state = {
@@ -53,7 +54,7 @@ class App extends Component {
     const { timer } = this.state.background;
     return (
       <div className="App">
-        <div className="config-panel">
+        <Container>
           <TimerConfig
             openOptions={this.openOptions}
             openTimer={this.openTimer}
@@ -62,27 +63,27 @@ class App extends Component {
             timerStatus={timer.timerStatus}
             pomoCount={timer.pomoCount}
           />
-        </div>
-
-        {this.state.display === 'timer' ? (
-          <div className="app-timer">
-            🍅 Pomo Counter: {timer.pomoCount} ⏰
-            <TimerDisplay
-              timerDisplay={timer.remaining}
-              timerStatus={timer.timerStatus}
-              pomoCount={timer.pomoCount}
-            />
-            <TimerButton
-              toggleTimer={this.toggleTimer}
-              resetTimer={this.resetTimer}
-              timerStatus={timer.timerStatus}
-            />
-          </div>
-        ) : (
-          <div className="app-options">
+        </Container>
+        <Divider hidden />
+        <Container>
+          {this.state.display === 'timer' ? (
+            <React.Fragment>
+              🍅 Pomo Counter: {timer.pomoCount} ⏰
+              <TimerDisplay
+                timerDisplay={timer.remaining}
+                timerStatus={timer.timerStatus}
+                pomoCount={timer.pomoCount}
+              />
+              <TimerButton
+                toggleTimer={this.toggleTimer}
+                resetTimer={this.resetTimer}
+                timerStatus={timer.timerStatus}
+              />
+            </React.Fragment>
+          ) : (
             <BlockForm background={this.state.background} />
-          </div>
-        )}
+          )}
+        </Container>
       </div>
     );
   }

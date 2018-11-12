@@ -11,10 +11,10 @@ class BlockList extends Component {
   render() {
     const { blockedURLs } = this.props;
     return (
-      <div>
+      <React.Fragment>
         <h3>Blocked Websites</h3>
         <ul>{this.renderBlocked(blockedURLs)}</ul>
-      </div>
+      </React.Fragment>
     );
   }
 }
