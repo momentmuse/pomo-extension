@@ -36,7 +36,6 @@ class BlockForm extends Component {
   };
 
   handleRemove = id => {
-    console.log('🚮 id of website to be removed!', id);
     const blockedURLs = this.state.blockedURLs.slice();
     const filteredURLs = blockedURLs.filter(urlObj => urlObj.id !== id);
 

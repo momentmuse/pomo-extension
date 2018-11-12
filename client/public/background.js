@@ -40,6 +40,8 @@ var blockRequest = details => {
   return { cancel: true };
 };
 
+// on removal of url (BlockForm.handleRemove(id)), the list is persisted in sync storage, but the webRequest listener is not removed. Must remove it!
+
 var setBlockFilters = blockedURLs => {
   var request = chrome.webRequest.onBeforeRequest;
   var studyMode = timer.pomoCount % 2 === 0;
@@ -52,7 +54,7 @@ var setBlockFilters = blockedURLs => {
 };
 
 var toggleTimer = () => {
-  // this sets filters on pressing start for the first time
+  // this sets filters on clicking start for the first time
   updateBlockedURLs();
   setBlockFilters(blockedURLs);
 
