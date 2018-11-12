@@ -31,8 +31,10 @@ class BlockForm extends Component {
 
     this.setState({ blockedURLs });
     this.persistBlockList(blockedURLs);
-    // update blockedURLs on background
+    // update blockedURLs on background (please refactor)
     this.props.background.getBlockedURLsFromStorage();
+    // TODO: implement block from current tab
+    // this.props.background.setBlockFilters();
   };
 
   handleRemove = id => {
@@ -42,7 +44,7 @@ class BlockForm extends Component {
 
     this.setState({ blockedURLs });
     this.persistBlockList(blockedURLs);
-    // update blockedURLs on background
+    // update blockedURLs on background (please refactor)
     this.props.background.getBlockedURLsFromStorage();
   };
 
