@@ -40,10 +40,10 @@ var blockRequest = details => {
   return { cancel: true };
 };
 
-var toggleBlockFilters = blockedURLs => {
+var setBlockFilters = blockedURLs => {
   var request = chrome.webRequest.onBeforeRequest;
-  var urls = blockedURLs.map(urlObj => urlObj.url);
   var studyMode = timer.pomoCount % 2 === 0;
+  var urls = blockedURLs.map(urlObj => urlObj.url);
 
   // This is hard to understand
   studyMode
@@ -52,8 +52,9 @@ var toggleBlockFilters = blockedURLs => {
 };
 
 var toggleTimer = () => {
+  // this sets filters on pressing start for the first time
   updateBlockedURLs();
-  toggleBlockFilters(blockedURLs);
+  setBlockFilters(blockedURLs);
 
   if (timer.timerStatus !== 'TIMER_RUNNING') {
     timer.timerStatus = STATUSES.TIMER_RUNNING;
@@ -91,7 +92,7 @@ var checkIfFinished = () => {
 
 var onTimerEnd = () => {
   updateBlockedURLs();
-  toggleBlockFilters(blockedURLs);
+  setBlockFilters(blockedURLs);
 
   if (timer.pomoCount === 8) {
     resetTimer('POMO_COMPLETE');

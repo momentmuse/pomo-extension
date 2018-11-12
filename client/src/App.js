@@ -20,7 +20,7 @@ class App extends Component {
   componentDidMount() {
     setInterval(() => {
       this.setState(this.state);
-    }, 500);
+    }, 300);
   }
 
   toggleTimer = () => {
