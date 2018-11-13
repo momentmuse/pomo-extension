@@ -92,7 +92,7 @@ class BlockForm extends Component {
               onChange={this.handleChange}
               name="title"
               value={title}
-              placeholder="What shall we call it?"
+              placeholder="What's the site called?"
             />
             <Form.Input
               type="text"
