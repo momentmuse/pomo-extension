@@ -10,11 +10,11 @@ var STATUSES = {
 };
 
 var timer = {
-  pomoDuration: moment.duration(5, 'seconds'),
-  shortBreakDuration: moment.duration(5, 'seconds'),
-  longBreakDuration: moment.duration(10, 'seconds'),
+  pomoDuration: moment.duration(20, 'seconds'),
+  shortBreakDuration: moment.duration(15, 'seconds'),
+  longBreakDuration: moment.duration(20, 'seconds'),
   countdownID: null,
-  remaining: moment.duration(5, 'seconds'),
+  remaining: moment.duration(20, 'seconds'),
   timerStatus: STATUSES.POMO_COMPLETE,
   pomoCount: 0
 };

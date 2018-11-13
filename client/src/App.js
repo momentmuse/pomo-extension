@@ -6,8 +6,8 @@ import TimerButton from './components/Timer/TimerButton';
 import TimerImage from './components/Timer/TimerImage';
 import ProgressBar from './components/Timer/ProgressBar';
 import BlockForm from './components/Options/BlockForm';
-import './App.css';
 import { Grid, Menu } from 'semantic-ui-react';
+import './App.css';
 
 class App extends Component {
   state = {
