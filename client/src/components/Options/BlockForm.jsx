@@ -1,8 +1,7 @@
 /*global chrome*/
 import React, { Component } from 'react';
 import BlockList from './BlockList';
-import { Button, Form, Container, Divider } from 'semantic-ui-react';
-import './BlockForm.css';
+import { Button, Form, Container } from 'semantic-ui-react';
 
 class BlockForm extends Component {
   state = {
@@ -87,33 +86,34 @@ class BlockForm extends Component {
       <React.Fragment>
         <Container>
           <Form onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              onChange={this.handleChange}
-              name="title"
-              value={title}
-              placeholder="Site Name"
-            />
-            <input
-              type="text"
-              onChange={this.handleChange}
-              name="urlString"
-              value={urlString}
-              placeholder="URL goes here!"
-            />
-            <div className="block-button">
-              <Button
-                basic
-                color="red"
-                type="submit"
-                disabled={!urlString || !title}
-              >
-                Block it!
-              </Button>
-            </div>
+            <Form.Field>
+              <input
+                type="text"
+                onChange={this.handleChange}
+                name="title"
+                value={title}
+                placeholder="What shall we call it?"
+              />
+            </Form.Field>
+            <Form.Field>
+              <input
+                type="text"
+                onChange={this.handleChange}
+                name="urlString"
+                value={urlString}
+                placeholder="Copy and paste it here!"
+              />
+            </Form.Field>
+            <Button
+              basic
+              color="red"
+              type="submit"
+              disabled={!urlString || !title}
+            >
+              Block it!
+            </Button>
           </Form>
         </Container>
-        <Divider hidden />
         <BlockList blockedURLs={blockedURLs} handleRemove={this.handleRemove} />
       </React.Fragment>
     );
