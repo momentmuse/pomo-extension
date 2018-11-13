@@ -10,21 +10,27 @@ const TimerDisplay = props => {
   const minutes = timerDisplay.get('minutes');
   const seconds = timerDisplay.get('seconds');
 
-  // {(timerStatus === 'TIMER_RUNNING' || timerStatus === 'TIMER_PAUSED') && (
-  //   <h3>{pomoCount % 2 === 0 ? 'Back to work! 📖' : 'Take a break ☕️'}</h3>
-  //   )}
+  const getDialog = props => {
+    if (timerStatus === 'POMO_COMPLETE') {
+      return 'Never put off until tomorrow what you can do the day after tomorrow.';
+    } else if (
+      (timerStatus === 'TIMER_RUNNING' || timerStatus === 'TIMER_PAUSED') &&
+      props.pomoCount % 2 === 0
+    ) {
+      return 'I love deadlines. I like the whooshing sound they make as they fly by.';
+    } else if (props.pomoCount % 2 !== 0) {
+      return 'Time you enjoy wasting is not wasted time.';
+    } else {
+      return 'People say nothing is impossible, but I do nothing every day.';
+    }
+  };
 
   return (
     <React.Fragment>
       <h1>{`${padLeft(minutes)}:${padLeft(seconds)}`}</h1>
-      {(timerStatus === 'TIMER_RUNNING' || timerStatus === 'TIMER_PAUSED') &&
-        props.pomoCount % 2 === 0 && (
-          <Label basic pointing>
-            I love deadlines. I like the whooshing sound they make as they fly
-            by.
-          </Label>
-        )}
-      {timerStatus === 'POMO_COMPLETE' && <h2>Well done! 🍅</h2>}
+      <Label basic pointing>
+        {getDialog(props)}
+      </Label>
     </React.Fragment>
   );
 };

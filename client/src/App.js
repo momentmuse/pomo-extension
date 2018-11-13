@@ -1,13 +1,13 @@
 /*global chrome*/
 
 import React, { Component } from 'react';
-import './App.css';
 import TimerDisplay from './components/Timer/TimerDisplay';
 import TimerButton from './components/Timer/TimerButton';
 import TimerConfig from './components/Timer/TimerConfig';
 import BlockForm from './components/Options/BlockForm';
 import TimerImage from './components/Timer/TimerImage';
-import { Grid, Divider } from 'semantic-ui-react';
+import './App.css';
+import { Grid, Menu } from 'semantic-ui-react';
 
 class App extends Component {
   state = {
@@ -45,47 +45,44 @@ class App extends Component {
     });
   };
 
-  // TODO: Integrate Block Current tab
-  // blockCurrentTab = () => {
-  // console.log('👾 Blocking the current tab! Wooo!');
-  // this.state.background.blockCurrentTab();
-  // };
-
-  // TODO: change menu to tabular
-  // state = { activeItem: 'bio' }
-
-  // handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
-  // render() {
-  //   const { activeItem } = this.state
-
-  //   return (
-  //     <Menu  tabular>
-  //       <Menu.Item position="right" name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} />
-  //       <Menu.Item name='photos' active={activeItem === 'photos'} onClick={this.handleItemClick} />
-  //     </Menu>
-  //   )
-  // }
+  // <Grid.Row verticalAlign="top">
+  //   <React.Fragment>
+  //     <TimerConfig
+  //       openOptions={this.openOptions}
+  //       openTimer={this.openTimer}
+  //       blockCurrentTab={this.blockCurrentTab}
+  //       display={this.state.display}
+  //       timerStatus={timer.timerStatus}
+  //       pomoCount={timer.pomoCount}
+  //     />
+  //   </React.Fragment>
+  // </Grid.Row>
 
   render() {
     const { timer } = this.state.background;
+    const { display, background } = this.state;
+    const studyMode =
+      (timer.timerStatus === 'TIMER_RUNNING' ||
+        timer.timerStatus === 'TIMER_PAUSED') &&
+      timer.pomoCount % 2 === 0;
     return (
       <div className="App">
-        <Grid centered columns={1}>
-          <Grid.Row verticalAlign="top">
-            <React.Fragment>
-              <TimerConfig
-                openOptions={this.openOptions}
-                openTimer={this.openTimer}
-                blockCurrentTab={this.blockCurrentTab}
-                display={this.state.display}
-                timerStatus={timer.timerStatus}
-                pomoCount={timer.pomoCount}
-              />
-            </React.Fragment>
-          </Grid.Row>
-
-          {this.state.display === 'timer' ? (
+        <Menu tabular>
+          <Menu.Item
+            position="right"
+            name="Timer"
+            active={display === 'timer'}
+            onClick={this.openTimer}
+          />
+          <Menu.Item
+            name="Options"
+            active={display === 'options'}
+            disabled={studyMode}
+            onClick={this.openOptions}
+          />
+        </Menu>
+        <Grid container centered columns={1}>
+          {display === 'timer' ? (
             <React.Fragment>
               <Grid.Row>
                 <TimerImage
@@ -93,8 +90,6 @@ class App extends Component {
                   pomoCount={timer.pomoCount}
                 />
               </Grid.Row>
-
-              <Divider hidden clearing />
 
               <Grid.Row>
                 <TimerDisplay
@@ -104,7 +99,7 @@ class App extends Component {
                 />
               </Grid.Row>
 
-              <Grid.Row verticalAlign="bottom">
+              <Grid.Row>
                 <TimerButton
                   toggleTimer={this.toggleTimer}
                   resetTimer={this.resetTimer}
@@ -113,7 +108,7 @@ class App extends Component {
               </Grid.Row>
             </React.Fragment>
           ) : (
-            <BlockForm background={this.state.background} />
+            <BlockForm background={background} />
           )}
         </Grid>
       </div>

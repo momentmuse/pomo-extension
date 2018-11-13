@@ -10,3 +10,7 @@
     transform: rotate(360deg);
   }
 }
+
+.img {
+  max-height:150px;
+}
