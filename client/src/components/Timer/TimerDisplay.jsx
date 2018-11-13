@@ -1,5 +1,6 @@
 import React from 'react';
 import { Label, Image } from 'semantic-ui-react';
+import './TimerDisplay.css';
 
 const TimerDisplay = props => {
   const padLeft = num => {
@@ -19,7 +20,7 @@ const TimerDisplay = props => {
     ) {
       return 'I love deadlines. I like the whooshing sound they make as they fly by.';
     } else if (props.pomoCount % 2 !== 0) {
-      return 'Time you enjoy wasting is not wasted time.';
+      return 'Remember, time you enjoy wasting is not wasted time.';
     } else {
       return 'People say nothing is impossible, but I do nothing every day.';
     }
@@ -38,7 +39,7 @@ const TimerDisplay = props => {
       ) : (
         <h1>{`${padLeft(minutes)}:${padLeft(seconds)}`}</h1>
       )}
-      <Label basic pointing>
+      <Label basic pointing className="dialog">
         {getDialog(props)}
       </Label>
     </React.Fragment>

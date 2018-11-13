@@ -15,7 +15,7 @@ var timer = {
   longBreakDuration: moment.duration(15, 'seconds'),
   countdownID: null,
   remaining: moment.duration(25, 'seconds'),
-  timerStatus: STATUSES.NOT_SET,
+  timerStatus: STATUSES.POMO_COMPLETE,
   pomoCount: 0
 };
 

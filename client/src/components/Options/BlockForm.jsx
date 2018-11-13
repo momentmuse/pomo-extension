@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import BlockList from './BlockList';
 import { Button, Form, Grid } from 'semantic-ui-react';
+import './BlockForm.css';
 
 class BlockForm extends Component {
   state = {
@@ -110,7 +111,7 @@ class BlockForm extends Component {
             </Button>
           </Form>
         </Grid.Row>
-        <Grid.Row>
+        <Grid.Row className="block-list">
           <BlockList
             blockedURLs={blockedURLs}
             handleRemove={this.handleRemove}

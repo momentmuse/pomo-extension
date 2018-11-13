@@ -3,10 +3,11 @@
 import React, { Component } from 'react';
 import TimerDisplay from './components/Timer/TimerDisplay';
 import TimerButton from './components/Timer/TimerButton';
-import BlockForm from './components/Options/BlockForm';
 import TimerImage from './components/Timer/TimerImage';
+import ProgressBar from './components/Timer/ProgressBar';
+import BlockForm from './components/Options/BlockForm';
 import './App.css';
-import { Grid, Menu, Modal } from 'semantic-ui-react';
+import { Grid, Menu } from 'semantic-ui-react';
 
 class App extends Component {
   state = {
@@ -70,9 +71,10 @@ class App extends Component {
           />
         </Menu>
 
-        <Grid container centered columns={1}>
-          {display === 'timer' ? (
-            <React.Fragment>
+        {display === 'timer' ? (
+          <React.Fragment>
+            <ProgressBar pomoCount={timer.pomoCount} />
+            <Grid container centered columns={1}>
               <Grid.Row>
                 <TimerImage
                   timerStatus={timer.timerStatus}
@@ -95,11 +97,13 @@ class App extends Component {
                   timerStatus={timer.timerStatus}
                 />
               </Grid.Row>
-            </React.Fragment>
-          ) : (
+            </Grid>
+          </React.Fragment>
+        ) : (
+          <Grid container centered columns={1}>
             <BlockForm background={background} />
-          )}
-        </Grid>
+          </Grid>
+        )}
       </div>
     );
   }
