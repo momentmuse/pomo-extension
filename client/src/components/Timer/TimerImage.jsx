@@ -1,23 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Image } from 'semantic-ui-react';
 import './TimerImage.css';
 
-const TimerImage = props => {
-  const tomatoSrc = 'https://image.flaticon.com/icons/svg/877/877712.svg';
-  const workSrc =
-    'https://media1.tenor.com/images/4a950a1e221d93e654047ecee711af5a/tenor.gif';
-  const breakSrc = 'https://media.giphy.com/media/3tMAH63E0i0UX6oEuz/giphy.gif';
+class TimerImage extends Component {
+  renderImage = () => {
+    if (this.props.timerStatus === 'POMO_COMPLETE') {
+      return 'https://image.flaticon.com/icons/svg/1141/1141821.svg';
+    } else if (this.props.pomoCount % 2 !== 0) {
+      return 'https://media.giphy.com/media/3tMAH63E0i0UX6oEuz/giphy.gif';
+    } else {
+      return 'https://image.flaticon.com/icons/svg/877/877712.svg';
+    }
+  };
 
-  return (
-    <React.Fragment>
-      <Image
-        className={props.timerStatus === 'TIMER_RUNNING' ? 'logo' : ''}
-        src={tomatoSrc}
-        size="small"
-        centered
-      />
-    </React.Fragment>
-  );
-};
+  render() {
+    const { timerStatus, pomoCount } = this.props;
+    return (
+      <React.Fragment>
+        <Image
+          className={
+            timerStatus === 'TIMER_RUNNING' && pomoCount % 2 === 0 ? 'logo' : ''
+          }
+          src={this.renderImage()}
+          size="small"
+          centered
+        />
+      </React.Fragment>
+    );
+  }
+}
 
 export default TimerImage;

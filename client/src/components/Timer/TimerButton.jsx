@@ -30,8 +30,8 @@ const TimerButton = props => {
         <Button.Or />
         <Button
           size="big"
-          content="Cancel"
-          icon="stop circle"
+          content="Reset"
+          icon="repeat"
           labelPosition="right"
           onClick={resetTimer}
         />

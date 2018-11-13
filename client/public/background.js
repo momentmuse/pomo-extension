@@ -87,7 +87,6 @@ var checkIfFinished = () => {
     // delete for manual initiation (deleting this will break the block functionality)
     timer.timerStatus = STATUSES.NOT_SET;
     onTimerEnd();
-    // return;
   }
 };
 
