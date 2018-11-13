@@ -73,7 +73,10 @@ class App extends Component {
 
         {display === 'timer' ? (
           <React.Fragment>
-            <ProgressBar pomoCount={timer.pomoCount} />
+            <ProgressBar
+              timerStatus={timer.timerStatus}
+              pomoCount={timer.pomoCount}
+            />
             <Grid container centered columns={1}>
               <Grid.Row>
                 <TimerImage
