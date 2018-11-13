@@ -12,6 +12,7 @@ const TimerImage = props => {
       return 'https://media.giphy.com/media/3tMAH63E0i0UX6oEuz/giphy.gif';
     } else {
       return 'https://image.flaticon.com/icons/svg/877/877712.svg';
+      // flat: 'https://image.flaticon.com/icons/svg/877/877814.svg';
     }
   };
 

@@ -86,24 +86,20 @@ class BlockForm extends Component {
       <React.Fragment>
         <Grid.Row>
           <Form onSubmit={this.handleSubmit}>
-            <Form.Field>
-              <input
-                type="text"
-                onChange={this.handleChange}
-                name="title"
-                value={title}
-                placeholder="What shall we call it?"
-              />
-            </Form.Field>
-            <Form.Field>
-              <input
-                type="text"
-                onChange={this.handleChange}
-                name="urlString"
-                value={urlString}
-                placeholder="URL goes here!"
-              />
-            </Form.Field>
+            <Form.Input
+              type="text"
+              onChange={this.handleChange}
+              name="title"
+              value={title}
+              placeholder="What shall we call it?"
+            />
+            <Form.Input
+              type="text"
+              onChange={this.handleChange}
+              name="urlString"
+              value={urlString}
+              placeholder="URL goes here!"
+            />
             <Button
               basic
               color="red"

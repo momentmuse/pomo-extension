@@ -1,5 +1,5 @@
 import React from 'react';
-import { Label } from 'semantic-ui-react';
+import { Label, Image } from 'semantic-ui-react';
 
 const TimerDisplay = props => {
   const padLeft = num => {
@@ -27,7 +27,17 @@ const TimerDisplay = props => {
 
   return (
     <React.Fragment>
-      <h1>{`${padLeft(minutes)}:${padLeft(seconds)}`}</h1>
+      {timerStatus === 'POMO_COMPLETE' ? (
+        <h1>
+          Pomo complete!{' '}
+          <Image
+            avatar
+            src="https://image.flaticon.com/icons/svg/877/877814.svg"
+          />
+        </h1>
+      ) : (
+        <h1>{`${padLeft(minutes)}:${padLeft(seconds)}`}</h1>
+      )}
       <Label basic pointing>
         {getDialog(props)}
       </Label>

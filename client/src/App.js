@@ -3,11 +3,10 @@
 import React, { Component } from 'react';
 import TimerDisplay from './components/Timer/TimerDisplay';
 import TimerButton from './components/Timer/TimerButton';
-import TimerConfig from './components/Timer/TimerConfig';
 import BlockForm from './components/Options/BlockForm';
 import TimerImage from './components/Timer/TimerImage';
 import './App.css';
-import { Grid, Menu } from 'semantic-ui-react';
+import { Grid, Menu, Modal } from 'semantic-ui-react';
 
 class App extends Component {
   state = {
@@ -45,19 +44,6 @@ class App extends Component {
     });
   };
 
-  // <Grid.Row verticalAlign="top">
-  //   <React.Fragment>
-  //     <TimerConfig
-  //       openOptions={this.openOptions}
-  //       openTimer={this.openTimer}
-  //       blockCurrentTab={this.blockCurrentTab}
-  //       display={this.state.display}
-  //       timerStatus={timer.timerStatus}
-  //       pomoCount={timer.pomoCount}
-  //     />
-  //   </React.Fragment>
-  // </Grid.Row>
-
   render() {
     const { timer } = this.state.background;
     const { display, background } = this.state;
@@ -71,16 +57,19 @@ class App extends Component {
           <Menu.Item
             position="right"
             name="Timer"
+            icon="stopwatch"
             active={display === 'timer'}
             onClick={this.openTimer}
           />
           <Menu.Item
             name="Options"
             active={display === 'options'}
+            icon="options"
             disabled={studyMode}
             onClick={this.openOptions}
           />
         </Menu>
+
         <Grid container centered columns={1}>
           {display === 'timer' ? (
             <React.Fragment>
