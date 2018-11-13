@@ -1,7 +1,8 @@
 /*global chrome*/
 import React, { Component } from 'react';
 import BlockList from './BlockList';
-import { Button, Form, Divider, Container } from 'semantic-ui-react';
+import { Button, Form, Container, Divider } from 'semantic-ui-react';
+import './BlockForm.css';
 
 class BlockForm extends Component {
   state = {
@@ -100,12 +101,19 @@ class BlockForm extends Component {
               value={urlString}
               placeholder="URL goes here!"
             />
-            <Divider hidden />
-            <Button type="submit" disabled={!urlString || !title}>
-              Block it!
-            </Button>
+            <div className="block-button">
+              <Button
+                basic
+                color="red"
+                type="submit"
+                disabled={!urlString || !title}
+              >
+                Block it!
+              </Button>
+            </div>
           </Form>
         </Container>
+        <Divider hidden />
         <BlockList blockedURLs={blockedURLs} handleRemove={this.handleRemove} />
       </React.Fragment>
     );

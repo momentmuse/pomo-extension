@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+import './TimerButton.css';
 
 const TimerButton = props => {
   const { toggleTimer, resetTimer, timerStatus } = props;
   return (
-    <React.Fragment>
+    <div className="timer-button">
       <Button.Group>
         {timerStatus === 'TIMER_RUNNING' ? (
           <Button
@@ -36,7 +37,7 @@ const TimerButton = props => {
           onClick={resetTimer}
         />
       </Button.Group>
-    </React.Fragment>
+    </div>
   );
 };
 

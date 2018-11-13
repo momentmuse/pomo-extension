@@ -14,7 +14,7 @@ const BlockUrl = props => {
           }}
         />
       </List.Content>
-      <Image avatar />
+      <Image avatar src="https://image.flaticon.com/icons/svg/877/877814.svg" />
       <List.Content>{props.obj.title}</List.Content>
     </List.Item>
   );
