@@ -1,11 +1,10 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
-import './TimerButton.css';
+import { Button, Container } from 'semantic-ui-react';
 
 const TimerButton = props => {
   const { toggleTimer, resetTimer, timerStatus } = props;
   return (
-    <div className="timer-button">
+    <Container textAlign="center">
       <Button.Group>
         {timerStatus === 'TIMER_RUNNING' ? (
           <Button
@@ -37,7 +36,7 @@ const TimerButton = props => {
           onClick={resetTimer}
         />
       </Button.Group>
-    </div>
+    </Container>
   );
 };
 

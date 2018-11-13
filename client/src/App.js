@@ -7,7 +7,7 @@ import TimerButton from './components/Timer/TimerButton';
 import TimerConfig from './components/Timer/TimerConfig';
 import BlockForm from './components/Options/BlockForm';
 import TimerImage from './components/Timer/TimerImage';
-import { Container, Divider } from 'semantic-ui-react';
+import { Grid, Divider } from 'semantic-ui-react';
 
 class App extends Component {
   state = {
@@ -51,46 +51,71 @@ class App extends Component {
   // this.state.background.blockCurrentTab();
   // };
 
+  // TODO: change menu to tabular
+  // state = { activeItem: 'bio' }
+
+  // handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+  // render() {
+  //   const { activeItem } = this.state
+
+  //   return (
+  //     <Menu  tabular>
+  //       <Menu.Item position="right" name='bio' active={activeItem === 'bio'} onClick={this.handleItemClick} />
+  //       <Menu.Item name='photos' active={activeItem === 'photos'} onClick={this.handleItemClick} />
+  //     </Menu>
+  //   )
+  // }
+
   render() {
     const { timer } = this.state.background;
     return (
       <div className="App">
-        <React.Fragment>
-          <TimerConfig
-            openOptions={this.openOptions}
-            openTimer={this.openTimer}
-            blockCurrentTab={this.blockCurrentTab}
-            display={this.state.display}
-            timerStatus={timer.timerStatus}
-            pomoCount={timer.pomoCount}
-          />
-        </React.Fragment>
-        <Divider hidden clearing />
+        <Grid centered columns={1}>
+          <Grid.Row verticalAlign="top">
+            <React.Fragment>
+              <TimerConfig
+                openOptions={this.openOptions}
+                openTimer={this.openTimer}
+                blockCurrentTab={this.blockCurrentTab}
+                display={this.state.display}
+                timerStatus={timer.timerStatus}
+                pomoCount={timer.pomoCount}
+              />
+            </React.Fragment>
+          </Grid.Row>
 
-        {this.state.display === 'timer' ? (
-          <React.Fragment>
-            <Container>
-              🍅 Pomo Counter: {timer.pomoCount} ⏰
-              <TimerImage
-                timerStatus={timer.timerStatus}
-                pomoCount={timer.pomoCount}
-              />
-              <TimerDisplay
-                timerDisplay={timer.remaining}
-                timerStatus={timer.timerStatus}
-                pomoCount={timer.pomoCount}
-              />
-            </Container>
-            <Divider hidden clearing />
-            <TimerButton
-              toggleTimer={this.toggleTimer}
-              resetTimer={this.resetTimer}
-              timerStatus={timer.timerStatus}
-            />
-          </React.Fragment>
-        ) : (
-          <BlockForm background={this.state.background} />
-        )}
+          {this.state.display === 'timer' ? (
+            <React.Fragment>
+              <Grid.Row>
+                <TimerImage
+                  timerStatus={timer.timerStatus}
+                  pomoCount={timer.pomoCount}
+                />
+              </Grid.Row>
+
+              <Divider hidden clearing />
+
+              <Grid.Row>
+                <TimerDisplay
+                  timerDisplay={timer.remaining}
+                  timerStatus={timer.timerStatus}
+                  pomoCount={timer.pomoCount}
+                />
+              </Grid.Row>
+
+              <Grid.Row verticalAlign="bottom">
+                <TimerButton
+                  toggleTimer={this.toggleTimer}
+                  resetTimer={this.resetTimer}
+                  timerStatus={timer.timerStatus}
+                />
+              </Grid.Row>
+            </React.Fragment>
+          ) : (
+            <BlockForm background={this.state.background} />
+          )}
+        </Grid>
       </div>
     );
   }

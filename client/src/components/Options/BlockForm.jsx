@@ -1,7 +1,7 @@
 /*global chrome*/
 import React, { Component } from 'react';
 import BlockList from './BlockList';
-import { Button, Form, Container } from 'semantic-ui-react';
+import { Button, Form, Divider, Grid } from 'semantic-ui-react';
 
 class BlockForm extends Component {
   state = {
@@ -84,7 +84,7 @@ class BlockForm extends Component {
 
     return (
       <React.Fragment>
-        <Container>
+        <Grid.Row>
           <Form onSubmit={this.handleSubmit}>
             <Form.Field>
               <input
@@ -101,7 +101,7 @@ class BlockForm extends Component {
                 onChange={this.handleChange}
                 name="urlString"
                 value={urlString}
-                placeholder="Copy and paste it here!"
+                placeholder="Copy and paste the URL here!"
               />
             </Form.Field>
             <Button
@@ -113,8 +113,14 @@ class BlockForm extends Component {
               Block it!
             </Button>
           </Form>
-        </Container>
-        <BlockList blockedURLs={blockedURLs} handleRemove={this.handleRemove} />
+        </Grid.Row>
+        <Divider hidden clearing />
+        <Grid.Row stretched>
+          <BlockList
+            blockedURLs={blockedURLs}
+            handleRemove={this.handleRemove}
+          />
+        </Grid.Row>
       </React.Fragment>
     );
   }

@@ -1,7 +1,7 @@
 body {
   background-color: #EADEDB;
-  height: 380px;
-  width: 200px;
+  height: 450px;
+  width: 320px;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -9,6 +9,7 @@ body {
 
 .App {
   background-color: #FCFEFC;
+  padding: 5px;
   border-radius: 5px;
   width: 93vw;
   height: 95vh;
