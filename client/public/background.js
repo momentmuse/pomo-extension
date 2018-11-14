@@ -12,10 +12,10 @@ var STATUSES = {
 var timer = {
   pomoDuration: moment.duration(25, 'minutes'),
   shortBreakDuration: moment.duration(5, 'minutes'),
-  longBreakDuration: moment.duration(25, 'minutes'),
+  longBreakDuration: moment.duration(20, 'minutes'),
   countdownID: null,
   remaining: moment.duration(25, 'minutes'),
-  timerStatus: STATUSES.NOT_SET,
+  timerStatus: STATUSES.POMO_COMPLETE,
   pomoCount: 0
 };
 

@@ -103,9 +103,7 @@ class App extends Component {
             </Grid>
           </React.Fragment>
         ) : (
-          <Grid container centered columns={1}>
-            <BlockForm background={background} />
-          </Grid>
+          <BlockForm background={background} />
         )}
       </div>
     );

@@ -1,7 +1,7 @@
 /*global chrome*/
 import React, { Component } from 'react';
 import BlockList from './BlockList';
-import { Button, Form, Grid } from 'semantic-ui-react';
+import { Button, Form, Grid, Container, Divider } from 'semantic-ui-react';
 import './BlockForm.css';
 
 class BlockForm extends Component {
@@ -85,38 +85,41 @@ class BlockForm extends Component {
 
     return (
       <React.Fragment>
-        <Grid.Row>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Input
-              type="text"
-              onChange={this.handleChange}
-              name="title"
-              value={title}
-              placeholder="What's the site called?"
-            />
-            <Form.Input
-              type="text"
-              onChange={this.handleChange}
-              name="urlString"
-              value={urlString}
-              placeholder="URL goes here!"
-            />
-            <Button
-              basic
-              color="red"
-              type="submit"
-              disabled={!urlString || !title}
-            >
-              Block it!
-            </Button>
-          </Form>
-        </Grid.Row>
-        <Grid.Row className="block-list">
+        <Grid container centered columns={1}>
+          <Grid.Row>
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Input
+                type="text"
+                onChange={this.handleChange}
+                name="title"
+                value={title}
+                placeholder="What's the site called?"
+              />
+              <Form.Input
+                type="text"
+                onChange={this.handleChange}
+                name="urlString"
+                value={urlString}
+                placeholder="URL goes here!"
+              />
+              <Button
+                basic
+                color="red"
+                type="submit"
+                disabled={!urlString || !title}
+              >
+                Block it!
+              </Button>
+            </Form>
+          </Grid.Row>
+        </Grid>
+        <Divider hidden />
+        <Container className="block-list">
           <BlockList
             blockedURLs={blockedURLs}
             handleRemove={this.handleRemove}
           />
-        </Grid.Row>
+        </Container>
       </React.Fragment>
     );
   }
