@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/pomo-banner.png" width="80%">
+  <img src="./assets/pomo-banner.png" width="100%">
 </p>
 
 ---
@@ -21,14 +21,18 @@ Pomo is an adorably lightweight productivity timer that blocks distracting websi
 ## Screenshots
 
 <p align="center">
-<img src="./assets/pomo-screens.png" width="50%">
+<img src="./assets/pomo-screens.png" width="100%">
 </p>
 
 ## Motivation
 
 <p align="center">
-<img src="./assets/pomodoro-technique.png" width="50%">
+<img src="./assets/pomodoro-technique.png" width="100%">
 </p>
+
+The Pomodoro Technique is a time management technique developed by Francesco Cirillo in the late 1980s. Once pomo cycle is traditionally 25 minutes of work followed by 5 - 10 minutes of break. Breaking productive time up into smaller modules encourages greater focus, less fatigue, and less procrastination.
+
+With Pomo, I wanted to create an extension that blocks distracting websites during the work period. Pomo keeps you accountable and helps you focus on the tasks that really matter!
 
 ## Getting started
 
@@ -73,4 +77,5 @@ Amy Kirasack - [GitHub](https://github.com/momentmuse) - [LinkedIn](https://www.
 ## License
 
 Icons courtesy of [Freepik](https://www.flaticon.com/authors/freepik) at FlatIcon.
+
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/cherlin/trash-walk-backend/blob/develop/LICENSE) file for detail
